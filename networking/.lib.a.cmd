@@ -1,0 +1,1 @@
+cmd_networking/lib.a := rm -f networking/lib.a; /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-ar  rcs networking/lib.a networking/ping.o networking/tracebox.o networking/traceroute.o networking/whois.o

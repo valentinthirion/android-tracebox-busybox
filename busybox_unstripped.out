@@ -1,0 +1,886 @@
+Output of:
+/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-gcc -Wall -Wshadow -Wwrite-strings -Wundef -Wstrict-prototypes -Wunused -Wunused-parameter -Wunused-function -Wunused-value -Wmissing-prototypes -Wmissing-declarations -Wno-format-security -Wdeclaration-after-statement -Wold-style-definition -fno-builtin-strlen -finline-limit=0 -fomit-frame-pointer -ffunction-sections -fdata-sections -fno-guess-branch-probability -funsigned-char -static-libgcc -falign-functions=1 -falign-jumps=1 -falign-labels=1 -falign-loops=1 -fno-unwind-tables -fno-asynchronous-unwind-tables -Os -static -o busybox_unstripped -Wl,--sort-common -Wl,--sort-section,alignment -Wl,--start-group applets/built-in.o archival/lib.a archival/libarchive/lib.a console-tools/lib.a coreutils/lib.a coreutils/libcoreutils/lib.a debianutils/lib.a e2fsprogs/lib.a editors/lib.a findutils/lib.a init/lib.a libbb/lib.a libpwdgrp/lib.a loginutils/lib.a mailutils/lib.a miscutils/lib.a modutils/lib.a networking/lib.a networking/libiproute/lib.a networking/udhcp/lib.a printutils/lib.a procps/lib.a runit/lib.a selinux/lib.a shell/lib.a sysklogd/lib.a util-linux/lib.a util-linux/volume_id/lib.a archival/built-in.o archival/libarchive/built-in.o console-tools/built-in.o coreutils/built-in.o coreutils/libcoreutils/built-in.o debianutils/built-in.o e2fsprogs/built-in.o editors/built-in.o findutils/built-in.o init/built-in.o libbb/built-in.o libpwdgrp/built-in.o loginutils/built-in.o mailutils/built-in.o miscutils/built-in.o modutils/built-in.o networking/built-in.o networking/libiproute/built-in.o networking/udhcp/built-in.o printutils/built-in.o procps/built-in.o runit/built-in.o selinux/built-in.o shell/built-in.o sysklogd/built-in.o util-linux/built-in.o util-linux/volume_id/built-in.o -Wl,--end-group -Wl,--start-group -lcrypt -Wl,--end-group -Wl,--warn-common -Wl,-Map,busybox_unstripped.map -Wl,--verbose
+==========
+GNU ld (Sourcery G++ Lite 2010q1-202) 2.19.51.20090709
+  Supported emulations:
+   armelf_linux_eabi
+   armelfb_linux_eabi
+using internal linker script:
+==================================================
+/* Script for -z combreloc: combine and sort reloc sections */
+OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm",
+	      "elf32-littlearm")
+OUTPUT_ARCH(arm)
+ENTRY(_start)
+SEARCH_DIR("=/usr/local/lib"); SEARCH_DIR("=/lib"); SEARCH_DIR("=/usr/lib");
+SECTIONS
+{
+  /* Read-only sections, merged into text segment: */
+  PROVIDE (__executable_start = SEGMENT_START("text-segment", 0x00008000)); . = SEGMENT_START("text-segment", 0x00008000) + SIZEOF_HEADERS;
+  .interp         : { *(.interp) }
+  .note.gnu.build-id : { *(.note.gnu.build-id) }
+  .hash           : { *(.hash) }
+  .gnu.hash       : { *(.gnu.hash) }
+  .dynsym         : { *(.dynsym) }
+  .dynstr         : { *(.dynstr) }
+  .gnu.version    : { *(.gnu.version) }
+  .gnu.version_d  : { *(.gnu.version_d) }
+  .gnu.version_r  : { *(.gnu.version_r) }
+  .rel.dyn        :
+    {
+      *(.rel.init)
+      *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+      *(.rel.fini)
+      *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+      *(.rel.data.rel.ro* .rel.gnu.linkonce.d.rel.ro.*)
+      *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+      *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+      *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+      *(.rel.ctors)
+      *(.rel.dtors)
+      *(.rel.got)
+      *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+      *(.rel.ifunc)
+    }
+  .rela.dyn       :
+    {
+      *(.rela.init)
+      *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+      *(.rela.fini)
+      *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+      *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+      *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+      *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+      *(.rela.ctors)
+      *(.rela.dtors)
+      *(.rela.got)
+      *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+      *(.rela.ifunc)
+    }
+  .rel.plt        :
+    {
+      *(.rel.plt)
+      PROVIDE_HIDDEN (__rel_iplt_start = .);
+      *(.rel.iplt)
+      PROVIDE_HIDDEN (__rel_iplt_end = .);
+    }
+  .rela.plt       :
+    {
+      *(.rela.plt)
+      PROVIDE_HIDDEN (__rela_iplt_start = .);
+      *(.rela.iplt)
+      PROVIDE_HIDDEN (__rela_iplt_end = .);
+    }
+  .init           :
+  {
+    KEEP (*(.init))
+  } =0
+  .plt            : { *(.plt) *(.iplt)}
+  .text           :
+  {
+    *(.text .stub .text.* .gnu.linkonce.t.*)
+    /* .gnu.warning sections are handled specially by elf32.em.  */
+    *(.gnu.warning)
+    *(.glue_7t) *(.glue_7) *(.vfp11_veneer) *(.v4_bx)
+  } =0
+  .fini           :
+  {
+    KEEP (*(.fini))
+  } =0
+  PROVIDE (__etext = .);
+  PROVIDE (_etext = .);
+  PROVIDE (etext = .);
+  .rodata         : { *(.rodata .rodata.* .gnu.linkonce.r.*) }
+  .rodata1        : { *(.rodata1) }
+  .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) }
+   PROVIDE_HIDDEN (__exidx_start = .);
+  .ARM.exidx   : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) }
+   PROVIDE_HIDDEN (__exidx_end = .);
+  .eh_frame_hdr : { *(.eh_frame_hdr) }
+  .eh_frame       : ONLY_IF_RO { KEEP (*(.eh_frame)) }
+  .gcc_except_table   : ONLY_IF_RO { *(.gcc_except_table .gcc_except_table.*) }
+  /* Adjust the address for the data segment.  We want to adjust up to
+     the same address within the page on the next page up.  */
+  . = ALIGN (CONSTANT (MAXPAGESIZE)) - ((CONSTANT (MAXPAGESIZE) - .) & (CONSTANT (MAXPAGESIZE) - 1)); . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE));
+  /* Exception handling  */
+  .eh_frame       : ONLY_IF_RW { KEEP (*(.eh_frame)) }
+  .gcc_except_table   : ONLY_IF_RW { *(.gcc_except_table .gcc_except_table.*) }
+  /* Thread Local Storage sections  */
+  .tdata	  : { *(.tdata .tdata.* .gnu.linkonce.td.*) }
+  .tbss		  : { *(.tbss .tbss.* .gnu.linkonce.tb.*) *(.tcommon) }
+  .preinit_array     :
+  {
+    PROVIDE_HIDDEN (__preinit_array_start = .);
+    KEEP (*(.preinit_array))
+    PROVIDE_HIDDEN (__preinit_array_end = .);
+  }
+  .init_array     :
+  {
+     PROVIDE_HIDDEN (__init_array_start = .);
+     KEEP (*(SORT(.init_array.*)))
+     KEEP (*(.init_array))
+     PROVIDE_HIDDEN (__init_array_end = .);
+  }
+  .fini_array     :
+  {
+    PROVIDE_HIDDEN (__fini_array_start = .);
+    KEEP (*(SORT(.fini_array.*)))
+    KEEP (*(.fini_array))
+    PROVIDE_HIDDEN (__fini_array_end = .);
+  }
+  .ctors          :
+  {
+    /* gcc uses crtbegin.o to find the start of
+       the constructors, so we make sure it is
+       first.  Because this is a wildcard, it
+       doesn't matter if the user does not
+       actually link against crtbegin.o; the
+       linker won't look for a file to match a
+       wildcard.  The wildcard also means that it
+       doesn't matter which directory crtbegin.o
+       is in.  */
+    KEEP (*crtbegin.o(.ctors))
+    KEEP (*crtbegin?.o(.ctors))
+    /* We don't want to include the .ctor section from
+       the crtend.o file until after the sorted ctors.
+       The .ctor section from the crtend file contains the
+       end of ctors marker and it must be last */
+    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .ctors))
+    KEEP (*(SORT(.ctors.*)))
+    KEEP (*(.ctors))
+  }
+  .dtors          :
+  {
+    KEEP (*crtbegin.o(.dtors))
+    KEEP (*crtbegin?.o(.dtors))
+    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .dtors))
+    KEEP (*(SORT(.dtors.*)))
+    KEEP (*(.dtors))
+  }
+  .jcr            : { KEEP (*(.jcr)) }
+  .data.rel.ro : { *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*) *(.data.rel.ro* .gnu.linkonce.d.rel.ro.*) }
+  .dynamic        : { *(.dynamic) }
+  . = DATA_SEGMENT_RELRO_END (0, .);
+  .got            : { *(.got.plt) *(.igot.plt) *(.got) *(.igot) }
+  .data           :
+  {
+    __data_start = . ;
+    *(.data .data.* .gnu.linkonce.d.*)
+    SORT(CONSTRUCTORS)
+  }
+  .data1          : { *(.data1) }
+  _edata = .; PROVIDE (edata = .);
+  __bss_start = .;
+  __bss_start__ = .;
+  .bss            :
+  {
+   *(.dynbss)
+   *(.bss .bss.* .gnu.linkonce.b.*)
+   *(COMMON)
+   /* Align here to ensure that the .bss section occupies space up to
+      _end.  Align after .bss to ensure correct alignment even if the
+      .bss section disappears because there are no input sections.
+      FIXME: Why do we need it? When there is no .bss section, we don't
+      pad the .data section.  */
+   . = ALIGN(. != 0 ? 32 / 8 : 1);
+  }
+  _bss_end__ = . ; __bss_end__ = . ;
+  . = ALIGN(32 / 8);
+  . = ALIGN(32 / 8);
+  __end__ = . ;
+  _end = .; PROVIDE (end = .);
+  . = DATA_SEGMENT_END (.);
+  /* Stabs debugging sections.  */
+  .stab          0 : { *(.stab) }
+  .stabstr       0 : { *(.stabstr) }
+  .stab.excl     0 : { *(.stab.excl) }
+  .stab.exclstr  0 : { *(.stab.exclstr) }
+  .stab.index    0 : { *(.stab.index) }
+  .stab.indexstr 0 : { *(.stab.indexstr) }
+  .comment       0 : { *(.comment) }
+  /* DWARF debug sections.
+     Symbols in the DWARF debugging sections are relative to the beginning
+     of the section so we begin them at 0.  */
+  /* DWARF 1 */
+  .debug          0 : { *(.debug) }
+  .line           0 : { *(.line) }
+  /* GNU DWARF 1 extensions */
+  .debug_srcinfo  0 : { *(.debug_srcinfo) }
+  .debug_sfnames  0 : { *(.debug_sfnames) }
+  /* DWARF 1.1 and DWARF 2 */
+  .debug_aranges  0 : { *(.debug_aranges) }
+  .debug_pubnames 0 : { *(.debug_pubnames) }
+  /* DWARF 2 */
+  .debug_info     0 : { *(.debug_info .gnu.linkonce.wi.*) }
+  .debug_abbrev   0 : { *(.debug_abbrev) }
+  .debug_line     0 : { *(.debug_line) }
+  .debug_frame    0 : { *(.debug_frame) }
+  .debug_str      0 : { *(.debug_str) }
+  .debug_loc      0 : { *(.debug_loc) }
+  .debug_macinfo  0 : { *(.debug_macinfo) }
+  /* SGI/MIPS DWARF 2 extensions */
+  .debug_weaknames 0 : { *(.debug_weaknames) }
+  .debug_funcnames 0 : { *(.debug_funcnames) }
+  .debug_typenames 0 : { *(.debug_typenames) }
+  .debug_varnames  0 : { *(.debug_varnames) }
+  /* DWARF 3 */
+  .debug_pubtypes 0 : { *(.debug_pubtypes) }
+  .debug_ranges   0 : { *(.debug_ranges) }
+  .gnu.attributes 0 : { KEEP (*(.gnu.attributes)) }
+  .note.gnu.arm.ident 0 : { KEEP (*(.note.gnu.arm.ident)) }
+  /DISCARD/ : { *(.note.GNU-stack) *(.gnu_debuglink) }
+}
+
+
+==================================================
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/crt1.o succeeded
+/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/crt1.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/crti.o succeeded
+/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/crti.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/crtbeginT.o succeeded
+/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/crtbeginT.o
+attempt to open applets/built-in.o succeeded
+applets/built-in.o
+attempt to open archival/lib.a succeeded
+attempt to open archival/libarchive/lib.a succeeded
+attempt to open console-tools/lib.a succeeded
+attempt to open coreutils/lib.a succeeded
+attempt to open coreutils/libcoreutils/lib.a succeeded
+attempt to open debianutils/lib.a succeeded
+attempt to open e2fsprogs/lib.a succeeded
+attempt to open editors/lib.a succeeded
+attempt to open findutils/lib.a succeeded
+attempt to open init/lib.a succeeded
+attempt to open libbb/lib.a succeeded
+(libbb/lib.a)appletlib.o
+(libbb/lib.a)concat_path_file.o
+(libbb/lib.a)default_error_retval.o
+(libbb/lib.a)get_last_path_component.o
+(libbb/lib.a)last_char_is.o
+(libbb/lib.a)llist.o
+(libbb/lib.a)messages.o
+(libbb/lib.a)perror_msg.o
+(libbb/lib.a)ptr_to_globals.o
+(libbb/lib.a)skip_whitespace.o
+(libbb/lib.a)verror_msg.o
+(libbb/lib.a)wfopen.o
+(libbb/lib.a)xfunc_die.o
+(libbb/lib.a)xfuncs.o
+(libbb/lib.a)xfuncs_printf.o
+(libbb/lib.a)xreadlink.o
+(libbb/lib.a)copyfd.o
+(libbb/lib.a)full_write.o
+(libbb/lib.a)read.o
+(libbb/lib.a)safe_write.o
+(libbb/lib.a)time.o
+(libbb/lib.a)bb_strtonum.o
+attempt to open libpwdgrp/lib.a succeeded
+(libpwdgrp/lib.a)uidgid_get.o
+attempt to open loginutils/lib.a succeeded
+(loginutils/lib.a)su.o
+attempt to open mailutils/lib.a succeeded
+attempt to open miscutils/lib.a succeeded
+attempt to open modutils/lib.a succeeded
+(modutils/lib.a)insmod.o
+(modutils/lib.a)lsmod.o
+(modutils/lib.a)modutils.o
+(modutils/lib.a)rmmod.o
+attempt to open networking/lib.a succeeded
+(networking/lib.a)ping.o
+(networking/lib.a)tracebox.o
+(networking/lib.a)traceroute.o
+(networking/lib.a)whois.o
+attempt to open networking/libiproute/lib.a succeeded
+attempt to open networking/udhcp/lib.a succeeded
+attempt to open printutils/lib.a succeeded
+attempt to open procps/lib.a succeeded
+attempt to open runit/lib.a succeeded
+attempt to open selinux/lib.a succeeded
+attempt to open shell/lib.a succeeded
+attempt to open sysklogd/lib.a succeeded
+attempt to open util-linux/lib.a succeeded
+attempt to open util-linux/volume_id/lib.a succeeded
+attempt to open archival/built-in.o succeeded
+attempt to open archival/libarchive/built-in.o succeeded
+attempt to open console-tools/built-in.o succeeded
+attempt to open coreutils/built-in.o succeeded
+attempt to open coreutils/libcoreutils/built-in.o succeeded
+attempt to open debianutils/built-in.o succeeded
+attempt to open e2fsprogs/built-in.o succeeded
+attempt to open editors/built-in.o succeeded
+attempt to open findutils/built-in.o succeeded
+attempt to open init/built-in.o succeeded
+attempt to open libbb/built-in.o succeeded
+attempt to open libpwdgrp/built-in.o succeeded
+attempt to open loginutils/built-in.o succeeded
+attempt to open mailutils/built-in.o succeeded
+attempt to open miscutils/built-in.o succeeded
+attempt to open modutils/built-in.o succeeded
+attempt to open networking/built-in.o succeeded
+attempt to open networking/libiproute/built-in.o succeeded
+attempt to open networking/udhcp/built-in.o succeeded
+attempt to open printutils/built-in.o succeeded
+attempt to open procps/built-in.o succeeded
+attempt to open runit/built-in.o succeeded
+attempt to open selinux/built-in.o succeeded
+attempt to open shell/built-in.o succeeded
+attempt to open sysklogd/built-in.o succeeded
+attempt to open util-linux/built-in.o succeeded
+attempt to open util-linux/volume_id/built-in.o succeeded
+(archival/libarchive/lib.a)decompress_bunzip2.o
+(archival/libarchive/lib.a)open_transformer.o
+(coreutils/lib.a)whoami.o
+(libbb/lib.a)bb_pwd.o
+(libbb/lib.a)change_identity.o
+(libbb/lib.a)correct_password.o
+(libbb/lib.a)crc32.o
+(libbb/lib.a)getopt32.o
+(libbb/lib.a)inet_cksum.o
+(libbb/lib.a)info_msg.o
+(libbb/lib.a)nuke_str.o
+(libbb/lib.a)parse_config.o
+(libbb/lib.a)pw_encrypt.o
+(libbb/lib.a)read_printf.o
+(libbb/lib.a)run_shell.o
+(libbb/lib.a)safe_poll.o
+(libbb/lib.a)safe_strncpy.o
+(libbb/lib.a)setup_environment.o
+(libbb/lib.a)signals.o
+(libbb/lib.a)udp_io.o
+(libbb/lib.a)unicode.o
+(libbb/lib.a)vfork_daemon_rexec.o
+(libbb/lib.a)wfopen_input.o
+(libbb/lib.a)xatonum.o
+(libbb/lib.a)xconnect.o
+(libbb/lib.a)bb_askpass.o
+(libbb/lib.a)printable_string.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libcrypt.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/libcrypt.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/../../../../arm-none-linux-gnueabi/lib/libcrypt.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/lib/libcrypt.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a succeeded
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)crypt-entry.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)md5-crypt.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)sha256-crypt.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)sha512-crypt.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)crypt.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)crypt_util.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)md5.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)sha256.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libcrypt.a)sha512.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a succeeded
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_udivsi3.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_divsi3.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_aeabi_uldivmod.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_dvmd_lnx.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)bpabi.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_divdi3.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_udivdi3.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc_eh.a succeeded
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc_eh.a)unwind-arm.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc_eh.a)libunwind.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc_eh.a)pr-support.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libc.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/libc.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/../../../../arm-none-linux-gnueabi/lib/libc.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/lib/libc.a failed
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a succeeded
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)libc-start.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)check_fds.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)libc-tls.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)elf-init.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)errno.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)aeabi_read_tp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)errno-loc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)assert.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dcgettext.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dcigettext.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)finddomain.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)loadmsgcat.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)localealias.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)l10nflist.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)explodename.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)plural.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)plural-exp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)hash-string.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)bsd-_setjmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)longjmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)__longjmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)jmp-unwind.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)signal.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)raise.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigaction.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigprocmask.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigsuspend.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigempty.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigfillset.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigaddset.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigrestorer.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)atoi.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)abort.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)bsearch.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)msort.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getenv.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setenv.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)exit.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)cxa_atexit.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)random.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)random_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)rand.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtol.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtoul.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtoll.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtoull.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtol_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtoul_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtoll_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtoull_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)canonicalize.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)grouping.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)printf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)snprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)asprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sscanf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getline.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)rename.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fxprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofclose.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofdopen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofflush.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofopen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofread.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iogetdelim.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ioputs.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iovsprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iovsscanf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofopen64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)putchar_u.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)feof.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ferror.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fileno.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)vasprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iovdprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)vsnprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fcloseall.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)libc_fatal.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofgets_u.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofputs_u.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wfileops.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fileops.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)genops.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)stdfiles.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)stdio.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strops.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)malloc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)morecore.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strchr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strcmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strcpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strcspn.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strdup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strerror.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)_strerror.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strlen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strncmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strncpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strrchr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strpbrk.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strspn.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strstr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)memchr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)memcmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)memmove.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)memset.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mempcpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)stpcpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)stpncpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strcasecmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wordcopy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strsep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)rawmemchr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strchrnul.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)argz-count.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)argz-stringify.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)asm-memcpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wmempcpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wcsmbsload.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)localtime.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mktime.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)time.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gettimeofday.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tzset.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tzfile.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strptime.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strptime_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strftime.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strftime_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)alt_digit.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)era.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)lc-time-cleanup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)opendir.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)initgroups.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setgroups.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getgrgid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getgrnam.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getgrent_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getgrgid_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getgrnam_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getpwnam.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getpwuid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getpwnam_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getpwuid_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wait.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)waitpid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)alarm.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sleep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nanosleep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fork.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)vfork.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)_exit.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)execv.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)execvp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)execvpe.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getpid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getuid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)geteuid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getgid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getegid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setuid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setgid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setsid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setresuid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setresgid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sysconf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)confstr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getopt.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getopt1.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sched_yield.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)get_child_max.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getaddrinfo.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getlogin_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)environ.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)exit-thread.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)stat64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fstat64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)xstat64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fxstat64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)lxstat64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)open.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)open64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)close.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)read.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)write.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fcntl.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dup2.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)pipe.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)chdir.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getcwd.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ttyname_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)link.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)symlink.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)readlink.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)unlink.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)poll.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)have_o_cloexec.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tcsetattr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tcgetattr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tcflush.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getrlimit.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sbrk.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ioctl.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)seteuid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setegid.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getpagesize.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getdtsz.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)chroot.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mkstemp64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)usleep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getusershell.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)syslog.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)syscall.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mmap.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mmap64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)munmap.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mprotect.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)madvise.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tsearch.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getsysstats.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getclktck.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)init-misc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)llseek.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mremap.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)bind.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)connect.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getpeername.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getsockname.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)listen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)recvfrom.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)recvmsg.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)send.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sendmsg.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sendto.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setsockopt.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)socket.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)have_sock_cloexec.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)cmsg_nxthdr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)alloca_cutoff.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)libc-lowlevellock.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)libc-cancellation.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)register-atfork.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)libc_multiple_threads.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)inet_addr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)inet_pton.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)res_hconf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)res_libc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nsswitch.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getnssent_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)grp-lookup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)pwd-lookup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)hosts-lookup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)vfprintf_chk.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)backtrace.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)backtracesymsfd.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)idn-stub.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)inet_ntoa.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)herrno.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gethstbyad_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gethstbynm2_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getsrvbynm.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getsrvbynm_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)in6_addr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getnameinfo.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)if_index.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ifaddrs.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)check_pf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)check_native.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ifreq.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nscd_getpw_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nscd_getgr_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nscd_gethst_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nscd_getai.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nscd_initgroups.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nscd_getserv_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nscd_helper.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getutent_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)utmp_file.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)utmpname.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-support.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-addr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)enbl-secure.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-profstub.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-libc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-sysdep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)init-first.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sysdep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_open.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_close.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_db.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_conf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_builtin.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_simple.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_trans.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_cache.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gconv_dl.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)catnames.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setlocale.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)findlocale.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)loadlocale.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)loadarchive.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-ctype.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-time.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)SYS_libc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C_name.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)xlocale.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)global-locale.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)lc-ctype.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-messages.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-monetary.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-numeric.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-paper.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-name.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-address.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-telephone.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-measurement.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-identification.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)C-collate.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)localename.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ctype-info.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setfpucw.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fpu_control.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setjmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sigjmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)qsort.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)secure-getenv.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)_itoa.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)itoa-digits.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)itoa-udigits.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)vfprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)printf_fp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)reg-printf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)printf_fphex.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)reg-type.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)vfscanf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tempname.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)funlockfile.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)vfwprintf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)errlist.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)printf-parsemb.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)printf-parsewc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)filedoalloc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofputs.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ioftell.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofwrite.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iogetline.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iopadn.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ioseekoff.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofwide.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fseek.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)memstream.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ftello.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iofread_u.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wfiledoalloc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)iowpadn.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wgenops.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdlerror.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdladdr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdladdr1.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdlinfo.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdlmopen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strndup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strnlen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strncase.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strcasecmp_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strncase_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)argz-ctsep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)argz-addsep.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wmemcpy.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wmemset.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wcschr.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wcslen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wmemmove.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)btowc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mbrlen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mbrtowc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wcrtomb.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mbsrtowcs.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wcsrtombs.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mbsnrtowcs.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wcsnlen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wcschrnul.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mbsrtowcs_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)offtime.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)setitimer.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)closedir.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)readdir64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)uname.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)execve.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)xstat.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mkdir.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)access.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)isatty.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)xstatconv.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)brk.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)readv.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)writev.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gethostname.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)ftruncate64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)opensock.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)wctrans.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)towctrans.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)inet_ntop.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)res_init.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)service-lookup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)digits_dots.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)readonly-area.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)gethstbynm_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getsrvbypt_r.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)nis_hash.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-load.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-cache.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-lookup.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-object.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-reloc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-error.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-debug.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-misc.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-profile.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-tls.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-origin.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-scope.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-execstack.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-open.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-close.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-trampoline.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-tsd.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)lc-monetary.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)lc-numeric.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)s_isinf.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)s_isnan.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)s_signbit.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)cmp.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)divrem.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)lshift.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)rshift.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mul.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mul_1.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mul_n.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sub_n.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)submul_1.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dbl2mpn.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtof.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtod.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtold.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtof_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtod_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)strtold_l.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)tens_in_limb.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)fpioconst.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)_itowa.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)itowa-digits.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)reg-modifier.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdlopen.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdlclose.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdlsym.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)sdlvsym.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)getdents64.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)lseek.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)profil.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)prof-freq.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-deps.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-runtime.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-init.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-fini.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-version.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)dl-sym.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)add_n.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)addmul_1.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mpn2flt.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/libc.a)mpn2dbl.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_arm_cmpdf2.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc.a)_aeabi_ldivmod.o
+(/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/libgcc_eh.a)unwind-c.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/crtend.o succeeded
+/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.1/crtend.o
+attempt to open /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/crtn.o succeeded
+/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/../arm-none-linux-gnueabi/libc/usr/lib/crtn.olibbb/lib.a(change_identity.o): In function `change_identity':
+change_identity.c:(.text.change_identity+0x10): warning: Using 'initgroups' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+libbb/lib.a(appletlib.o): In function `run_applet_no_and_exit':
+appletlib.c:(.text.run_applet_no_and_exit+0xf0): warning: Using 'getgrgid' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+libpwdgrp/lib.a(uidgid_get.o): In function `get_uidgid':
+uidgid_get.c:(.text.get_uidgid+0xfc): warning: Using 'getgrnam' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+libbb/lib.a(change_identity.o): In function `change_identity':
+change_identity.c:(.text.change_identity+0x24): warning: Using 'endgrent' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+libbb/lib.a(appletlib.o): In function `run_applet_no_and_exit':
+appletlib.c:(.text.run_applet_no_and_exit+0x10c): warning: Using 'getpwnam' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+libpwdgrp/lib.a(uidgid_get.o): In function `get_uidgid':
+uidgid_get.c:(.text.get_uidgid+0x84): warning: Using 'getpwuid' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+libbb/lib.a(xconnect.o): In function `str2sockaddr':
+xconnect.c:(.text.str2sockaddr+0x120): warning: Using 'getaddrinfo' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+libbb/lib.a(xconnect.o): In function `bb_lookup_port':
+xconnect.c:(.text.bb_lookup_port+0x54): warning: Using 'getservbyname' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
+

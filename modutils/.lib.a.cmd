@@ -1,0 +1,1 @@
+cmd_modutils/lib.a := rm -f modutils/lib.a; /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-ar  rcs modutils/lib.a modutils/insmod.o modutils/lsmod.o modutils/modutils.o modutils/rmmod.o
