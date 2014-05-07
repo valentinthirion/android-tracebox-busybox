@@ -45,15 +45,48 @@ enum {
 
 struct tcp_option_mss
 {
-    uint8_t     kind;               /* 2 */
-    uint8_t     len;                /* 4 */
-    uint16_t    mss;
-}           __attribute__((packed));
+    uint8_t kind;               /* 2 */
+    uint8_t len;                /* 4 */
+    uint16_t mss;
+} __attribute__((packed));
+
+struct tcp_option_sack_perm
+{
+    uint8_t kind;               /* 2 */
+    uint8_t len;                /* 2 */
+}__attribute__((packed));
+
+struct tcp_option_timestamp
+{
+    uint8_t kind;               /* 8 */
+    uint8_t len;                /* 10 */
+    uint32_t tsval;
+    uint32_t tsecr;
+    
+}__attribute__((packed));
+
+struct tcp_option_nop
+{
+    uint8_t kind;               /* 1 */
+    
+}__attribute__((packed));
+
+struct tcp_option_windowscale
+{
+    uint8_t kind;               /* 3 */
+    uint8_t len;                /* 3 */
+    uint8_t value;
+    
+}__attribute__((packed));
 
 struct tcphdr_mss
 {
     struct tcphdr tcphdr;
-    struct tcp_option_mss   mss;
+    struct tcp_option_mss mss;
+    struct tcp_option_sack_perm sack;
+    struct tcp_option_timestamp timestamp;
+    struct tcp_option_nop nop;
+    struct tcp_option_windowscale ws;
 };
 
 struct globals {
@@ -221,9 +254,26 @@ send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
     
     // -------- TCP
     tcp_header = (struct tcphdr_mss *) (datagram + sizeof (struct ip));
+
+    // OPTIONS
+    // ---- MMS
     tcp_header->mss.kind = 2;
     tcp_header->mss.len = 4;
     tcp_header->mss.mss = htons(1460);
+    // ---- SACK
+    tcp_header->sack.kind = 4;
+    tcp_header->sack.len = 2;
+    // ---- TIMESTAMP
+    tcp_header->timestamp.kind = 8;
+    tcp_header->timestamp.len = 10;
+    tcp_header->timestamp.tsval = (unsigned)time(NULL);
+    tcp_header->timestamp.tsecr = 0;
+    // ---- NOP
+    tcp_header->nop.kind = 1;
+    // ---- WS
+    tcp_header->ws.kind = 3;
+    tcp_header->ws.len = 3;
+    tcp_header->ws.value = 2;
 
     tcp_header->tcphdr.source = htons(32768 + 666 + seq);
     tcp_header->tcphdr.dest = htons(port);
