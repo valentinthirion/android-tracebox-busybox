@@ -56,7 +56,7 @@ static const char bbconfig_config[] ALIGN1 =
 "# CONFIG_FEATURE_INDIVIDUAL is not set\n"
 "# CONFIG_FEATURE_SHARED_BUSYBOX is not set\n"
 "CONFIG_LFS=y\n"
-"CONFIG_CROSS_COMPILER_PREFIX=\"/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-\"\n"
+"CONFIG_CROSS_COMPILER_PREFIX=\"\"\n"
 "CONFIG_SYSROOT=\"\"\n"
 "CONFIG_EXTRA_CFLAGS=\"\"\n"
 "CONFIG_EXTRA_LDFLAGS=\"\"\n"

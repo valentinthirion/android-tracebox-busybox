@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <string.h>
+#include <errno.h>
 
 #include <net/if.h>
 #include <arpa/inet.h>
@@ -40,6 +41,19 @@ enum {
 	SIZEOF_ICMP_HDR = 8,
 	rcvsock = 3, /* receive (icmp) socket file descriptor */
 	sndsock = 4, /* send (tcp) socket file descriptor */
+};
+
+struct tcp_option_mss
+{
+    uint8_t     kind;               /* 2 */
+    uint8_t     len;                /* 4 */
+    uint16_t    mss;
+}           __attribute__((packed));
+
+struct tcphdr_mss
+{
+    struct tcphdr tcphdr;
+    struct tcp_option_mss   mss;
 };
 
 struct globals {
@@ -198,21 +212,41 @@ send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
     dest_lsa->u.sin.sin_port = htons(80);
 
     memset(datagram, 0, 4096);	/* zero out the buffer */
-    char *data;
     char *pseudogram;
+
+    struct tcphdr *tcph;
+    struct tcphdr_mss *tcp_header;
     
     // --- VALUES SETTING
-
-    //Data part
-    data = datagram + sizeof(struct iphdr) + sizeof(struct tcphdr);
-    //strcpy(data , "HelloWorld");
     
-    // IP
+    // -------- TCP
+    tcp_header = (struct tcphdr_mss *) (datagram + sizeof (struct ip));
+    tcp_header->mss.kind = 2;
+    tcp_header->mss.len = 4;
+    tcp_header->mss.mss = htons(1460);
+
+    tcp_header->tcphdr.source = htons(32768 + 666 + seq);
+    tcp_header->tcphdr.dest = htons(port);
+    tcp_header->tcphdr.seq = htonl(rand()); // seq
+    tcp_header->tcphdr.ack_seq = htonl(0);
+    tcp_header->tcphdr.doff = (sizeof(struct tcphdr_mss)) / 4; // 6;  //tcp header size
+    tcp_header->tcphdr.res1 = 0;
+    tcp_header->tcphdr.fin = 0;
+    tcp_header->tcphdr.syn = 1;
+    tcp_header->tcphdr.rst = 0;
+    tcp_header->tcphdr.psh = 0;
+    tcp_header->tcphdr.ack = 0;
+    tcp_header->tcphdr.urg = 0;
+    tcp_header->tcphdr.window = htons(5840);
+    tcp_header->tcphdr.check = 0; /* Will calculate the checksum with pseudo-header later */
+    tcp_header->tcphdr.urg_ptr = 0;
+
+    // -------- IP
     sent_ip = (struct iphdr *) datagram;
     sent_ip->ihl = 5;
     sent_ip->version = 4;
     sent_ip->tos = 0;
-    sent_ip->tot_len = sizeof (struct iphdr) + sizeof (struct tcphdr) + strlen(data);
+    sent_ip->tot_len = sizeof (struct iphdr) + sizeof (struct tcphdr_mss);
     sent_ip->id = htonl(rand()); //Id of this packet
     sent_ip->frag_off = 0;
     sent_ip->ttl = ttl;
@@ -220,66 +254,31 @@ send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
     sent_ip->check = 0;      //Set to 0 before calculating checksum
     sent_ip->saddr = inet_addr(local_addr);
     sent_ip->daddr = dest_lsa->u.sin.sin_addr.s_addr;
+    // IP Checksum
+    sent_ip->check = csum((unsigned short *) datagram, sent_ip->ihl);
 
-    // Checksum
-    sent_ip->check = csum ((unsigned short *) datagram, sent_ip->ihl);
-    
-    // TCP
-    struct tcphdr *tcph;
-    tcph = (struct tcphdr *) (datagram + sizeof (struct ip));
-    tcph->source = htons(32768 + 666 + seq);
-    tcph->dest = htons(port);
-    tcph->seq = htonl(rand()); // seq
-    tcph->ack_seq = htonl(0);
-    tcph->doff = 5;  //tcp header size
-    tcph->res1 = 0;
-    tcph->doff = (sizeof(struct tcphdr)) / 4;
-    tcph->fin = 0;
-    tcph->syn = 1;
-    tcph->rst = 0;
-    tcph->psh = 0;
-    tcph->ack = 0;
-    tcph->urg = 0;
-    tcph->window = htons(65535);
-    //tcph->check = 0; /* Will calculate the checksum with pseudo-header later */
-    tcph->urg_ptr = 0;
-
-    //Now the TCP checksum
+    // -------- TCP checksum
     struct pseudo_header psh;
     psh.source_address = inet_addr(local_addr);
     psh.dest_address = dest_lsa->u.sin.sin_addr.s_addr;
     psh.placeholder = 0;
     psh.protocol = IPPROTO_TCP;
-    psh.tcp_length = htons(sizeof(struct tcphdr) + strlen(data));
+    psh.tcp_length = htons(sizeof(struct tcphdr));
 
     int psize;
-    psize = sizeof(struct pseudo_header) + sizeof(struct tcphdr) + strlen(data);
+    psize = sizeof(struct pseudo_header) + sizeof(struct tcphdr_mss);
     pseudogram = malloc(psize);
 
-    memcpy(pseudogram , (char*) &psh , sizeof (struct pseudo_header));
-    memcpy(pseudogram + sizeof(struct pseudo_header) , tcph , sizeof (struct tcphdr) + strlen(data));
+    memcpy(pseudogram , (char*) &psh , sizeof(struct pseudo_header));
+    memcpy(pseudogram + sizeof(struct pseudo_header) , tcp_header , sizeof(struct tcphdr_mss));
 
-    tcph->check = csum( (unsigned short*) pseudogram , psize);
-    
+    tcp_header->tcphdr.check = csum((unsigned short*) pseudogram , psize);
     // --- END OF VALUES SETTING
-    
-    // AVERT THE KERNEL TO NOT PUT ITS OWN HEADERS
-    int one;
-    one = 1;
-    const int *val;
-    val = &one;
-    if (setsockopt (sndsock, IPPROTO_IP, IP_HDRINCL, val, sizeof (one)) < 0)
-        printf ("Warning: Cannot set HDRINCL!\n");
-    
-    // CHECKSUM
-    sent_ip->check = csum ((unsigned short *) datagram, sent_ip->tot_len >> 1);
     
     // SEND
     int sent;
-    sent = 0;
-    
     sent = sendto(sndsock, datagram, sent_ip->tot_len, 0, &dest_lsa->u.sa, dest_lsa->len);
-    if (sent = 0)
+    if (sent == 0)
         printf("Error! Send=%d\n", sent);
     return;
 }
@@ -331,46 +330,61 @@ packet_ok(int read_len, len_and_sockaddr *from_lsa, struct sockaddr *to, int seq
     
 	read_len -= main_hlen; // get the length of the ICMP
     quoted_data_len -= main_hlen; // Quoted = total - IP_hlen (20 bytes)
-    
-    // Get ICMP
-    struct icmp *icp;
-	icp = castToICMP(recv_pkt, main_hlen); // (struct icmp *)(recv_pkt + hlen);
-	type = icp->icmp_type;
-	code = icp->icmp_code;
-    
-	if ((type == ICMP_TIMXCEED && code == ICMP_TIMXCEED_INTRANS)
-        || type == ICMP_UNREACH
-        || type == ICMP_ECHOREPLY
-        )
+
+    // Test if ICMP OR TCP
+    //printf("IP PROTO : %d\n", ip->protocol);
+
+    if (ip->protocol == 1) // ICMP
     {
-        quoted_data_len -= 8; // Quoted = rest - ICMP_hlen (8 bytes)
-        
-		//quoted_ip = castToIP(recv_pkt, main_hlen + 8); // &icp->icmp_ip; // Quoted IP
-
-        quoted_ip_offset = main_hlen + SIZEOF_ICMP_HDR;
-        quoted_ip = castToIP(recv_pkt, quoted_ip_offset); // Quoted IP
-
-        //printf("quoted version= %d\n", quoted_ip->version);
-        quoted_hlen = quoted_ip->ihl << 2; // Quoted IP header lenght
-
-        quoted_tcp_offset = main_hlen + SIZEOF_ICMP_HDR + quoted_hlen;
-		
-        int expected_quoted_ip_len;
-        expected_quoted_ip_len = quoted_ip->tot_len << 2;
-        
-        // TEST IF PARTIAL
-        if (expected_quoted_ip_len > quoted_data_len)
+        // Get ICMP
+        struct icmp *icp;
+        icp = castToICMP(recv_pkt, main_hlen); // (struct icmp *)(recv_pkt + hlen);
+        type = icp->icmp_type;
+        code = icp->icmp_code;
+    
+        if ((type == ICMP_TIMXCEED && code == ICMP_TIMXCEED_INTRANS)
+            || type == ICMP_UNREACH
+            || type == ICMP_ECHOREPLY
+            )
         {
-            partial = true;
-            //printf("PARTIAL ICMP\n");
+            quoted_data_len -= 8; // Quoted = rest - ICMP_hlen (8 bytes)
+
+            //quoted_ip = castToIP(recv_pkt, main_hlen + 8); // &icp->icmp_ip; // Quoted IP
+
+            quoted_ip_offset = main_hlen + SIZEOF_ICMP_HDR;
+            quoted_ip = castToIP(recv_pkt, quoted_ip_offset); // Quoted IP
+
+            //printf("quoted version= %d\n", quoted_ip->version);
+            quoted_hlen = quoted_ip->ihl << 2; // Quoted IP header lenght
+
+            quoted_tcp_offset = main_hlen + SIZEOF_ICMP_HDR + quoted_hlen;
+
+            int expected_quoted_ip_len;
+            expected_quoted_ip_len = quoted_ip->tot_len << 2;
+
+            // TEST IF PARTIAL
+            if (expected_quoted_ip_len > quoted_data_len)
+            {
+                partial = true;
+                //printf("PARTIAL ICMP\n");
+            }
+            else
+            {
+                partial = false;
+                //printf("FULL ICMP\n");
+            }
+
+            return (type == ICMP_TIMXCEED ? -1 : code + 1);
         }
-        else
-        {
-            partial = false;
-            //printf("FULL ICMP\n");
-        }
-        return (type == ICMP_TIMXCEED ? -1 : code + 1);
-	}
+    }
+    else if (ip->protocol == 6) // TCP
+    {
+        struct tcphdr * tcp;
+        tcp = castToTCP(recv_pkt, main_hlen);
+
+        printf("FLAGS: %x\n", recv_pkt[main_hlen + 13]);
+        printf("ACK: %d\n", tcp->ack);
+    }
     
 	return 0;
 }
@@ -529,7 +543,7 @@ common_tracebox_main(char **argv)
 	int max_ttl = 30;
 	int nprobes = 3;
 	int first_ttl = 1;
-    int starts_max = 10;
+    int starts_max = 20;
 	unsigned pausemsecs = 0;
 	char *dest_str;
     
@@ -561,6 +575,14 @@ common_tracebox_main(char **argv)
             printf("ERROR opening send socket\n");
             return 1;
         }
+
+        // AVERT THE KERNEL TO NOT PUT ITS OWN HEADERS
+        int one;
+        one = 1;
+        const int *val;
+        val = &one;
+        if (setsockopt(sndsock, IPPROTO_IP, IP_HDRINCL, val, sizeof(one)) < 0)
+            printf ("Warning: Cannot set HDRINCL!\n");
         
         // RECEIVE
         xmove_fd(xsocket(AF_INET, SOCK_RAW, IPPROTO_ICMP), rcvsock); // This is for UDP
@@ -571,11 +593,11 @@ common_tracebox_main(char **argv)
         }
         
         // TCP
-        if (connect(sndsock, &dest_lsa->u.sa, dest_lsa->len) < 0)
+        /*if (connect(sndsock, &dest_lsa->u.sa, dest_lsa->len) < 0)
         {
             printf("ERROR connecting");
             return 1;
-        }
+        }*/
     }
     
     // GET LOCAL IP ADDRESS
@@ -586,7 +608,7 @@ common_tracebox_main(char **argv)
         ioctl(sndsock, SIOCGIFADDR, &ifr);
         local_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
     }
-    
+
     // PROCESS ID
 	ident = getpid();
     
@@ -714,6 +736,9 @@ common_tracebox_main(char **argv)
         if (start_counter == starts_max)
             break;
 	}
+
+    close(sndsock);
+    close(rcvsock);
     
 	return 0;
 }

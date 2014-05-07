@@ -1,1 +1,1 @@
-cmd_init/built-in.o :=  rm -f init/built-in.o; /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-ar rcs init/built-in.o
+cmd_init/built-in.o :=  rm -f init/built-in.o; ar rcs init/built-in.o

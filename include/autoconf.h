@@ -2,7 +2,7 @@
  * Automatically generated C config: don't edit
  * Busybox version: 1.22.1
  */
-#define AUTOCONF_TIMESTAMP "2014-05-04 21:30:42 CEST"
+#define AUTOCONF_TIMESTAMP "2014-05-07 13:33:35 CEST"
 
 #define CONFIG_HAVE_DOT_CONFIG 1
 #define ENABLE_HAVE_DOT_CONFIG 1
@@ -308,7 +308,7 @@
 # define IF_LFS(...) __VA_ARGS__
 #endif
 #define IF_NOT_LFS(...)
-#define CONFIG_CROSS_COMPILER_PREFIX "/home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-"
+#define CONFIG_CROSS_COMPILER_PREFIX ""
 #define ENABLE_CROSS_COMPILER_PREFIX 1
 #ifdef MAKE_SUID
 # define IF_CROSS_COMPILER_PREFIX(...) __VA_ARGS__ "CONFIG_CROSS_COMPILER_PREFIX"

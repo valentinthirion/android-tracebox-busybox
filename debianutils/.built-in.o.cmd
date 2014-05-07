@@ -1,1 +1,1 @@
-cmd_debianutils/built-in.o :=  rm -f debianutils/built-in.o; /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-ar rcs debianutils/built-in.o
+cmd_debianutils/built-in.o :=  rm -f debianutils/built-in.o; ar rcs debianutils/built-in.o

@@ -1,1 +1,1 @@
-cmd_coreutils/libcoreutils/built-in.o :=  rm -f coreutils/libcoreutils/built-in.o; /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-ar rcs coreutils/libcoreutils/built-in.o
+cmd_coreutils/libcoreutils/built-in.o :=  rm -f coreutils/libcoreutils/built-in.o; ar rcs coreutils/libcoreutils/built-in.o

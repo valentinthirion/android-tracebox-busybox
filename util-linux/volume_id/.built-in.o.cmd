@@ -1,1 +1,1 @@
-cmd_util-linux/volume_id/built-in.o :=  rm -f util-linux/volume_id/built-in.o; /home/valentin/Desktop/android_busybox_compiler/arm-2010q1/bin/arm-none-linux-gnueabi-ar rcs util-linux/volume_id/built-in.o
+cmd_util-linux/volume_id/built-in.o :=  rm -f util-linux/volume_id/built-in.o; ar rcs util-linux/volume_id/built-in.o
