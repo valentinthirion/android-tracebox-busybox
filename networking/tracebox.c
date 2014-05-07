@@ -156,28 +156,14 @@ static len_and_sockaddr* dup_sockaddr(const len_and_sockaddr *lsa)
 
 // Generic checksum calculation function
 static unsigned short
-csum(unsigned short *ptr,int nbytes)
-{
-    register long sum;
-    unsigned short oddbyte;
-    register short answer;
-    
-    sum=0;
-    while(nbytes>1) {
-        sum+=*ptr++;
-        nbytes-=2;
-    }
-    if(nbytes==1) {
-        oddbyte=0;
-        *((u_char*)&oddbyte)=*(u_char*)ptr;
-        sum+=oddbyte;
-    }
-    
-    sum = (sum>>16)+(sum & 0xffff);
-    sum = sum + (sum>>16);
-    answer=(short)~sum;
-    
-    return(answer);
+    csum(unsigned short *buf, int nwords)
+{       //
+    unsigned long sum;
+    for(sum=0; nwords>0; nwords--)
+        sum += *buf++;
+    sum = (sum >> 16) + (sum &0xffff);
+    sum += (sum >> 16);
+    return (unsigned short)(~sum);
 }
 
 // This function casts an IP packet from an char *
@@ -240,14 +226,13 @@ castToTCP(char datagram[], int offset)
 }
 
 static void
-send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
+send_probe(char datagram[], int seq, int ttl, int syn_flag, int rst_flag)
 {
     dest_lsa->u.sin.sin_port = htons(80);
 
     memset(datagram, 0, 4096);	/* zero out the buffer */
     char *pseudogram;
 
-    struct tcphdr *tcph;
     struct tcphdr_mss *tcp_header;
     
     // --- VALUES SETTING
@@ -275,15 +260,15 @@ send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
     tcp_header->ws.len = 3;
     tcp_header->ws.value = 2;
 
-    tcp_header->tcphdr.source = htons(32768 + 666 + seq);
+    tcp_header->tcphdr.source = htons(48420 + seq);
     tcp_header->tcphdr.dest = htons(port);
-    tcp_header->tcphdr.seq = htonl(rand()); // seq
+    tcp_header->tcphdr.seq = htonl(rand() % 1000); // seq
     tcp_header->tcphdr.ack_seq = htonl(0);
     tcp_header->tcphdr.doff = (sizeof(struct tcphdr_mss)) / 4; // 6;  //tcp header size
     tcp_header->tcphdr.res1 = 0;
     tcp_header->tcphdr.fin = 0;
-    tcp_header->tcphdr.syn = 1;
-    tcp_header->tcphdr.rst = 0;
+    tcp_header->tcphdr.syn = syn_flag;
+    tcp_header->tcphdr.rst = rst_flag;
     tcp_header->tcphdr.psh = 0;
     tcp_header->tcphdr.ack = 0;
     tcp_header->tcphdr.urg = 0;
@@ -297,7 +282,7 @@ send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
     sent_ip->version = 4;
     sent_ip->tos = 0;
     sent_ip->tot_len = sizeof (struct iphdr) + sizeof (struct tcphdr_mss);
-    sent_ip->id = htonl(rand()); //Id of this packet
+    sent_ip->id = htons(rand()); //Id of this packet
     sent_ip->frag_off = 0;
     sent_ip->ttl = ttl;
     sent_ip->protocol = IPPROTO_TCP;
@@ -305,7 +290,7 @@ send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
     sent_ip->saddr = inet_addr(local_addr);
     sent_ip->daddr = dest_lsa->u.sin.sin_addr.s_addr;
     // IP Checksum
-    sent_ip->check = csum((unsigned short *) datagram, sent_ip->ihl);
+    sent_ip->check = csum((unsigned short*) datagram, 20);
 
     // -------- TCP checksum
     struct pseudo_header psh;
@@ -324,6 +309,12 @@ send_probe(char datagram[], int seq, int ttl, len_and_sockaddr *from_lsa)
 
     tcp_header->tcphdr.check = csum((unsigned short*) pseudogram , psize);
     // --- END OF VALUES SETTING
+
+    /*int i;
+    printf("\nSENT IP:\n");
+    for (i = 0; i < sent_ip->tot_len; i++)
+        printf("%x|", datagram[i]);
+    */
     
     // SEND
     int sent;
@@ -432,8 +423,10 @@ packet_ok(int read_len, len_and_sockaddr *from_lsa, struct sockaddr *to, int seq
         struct tcphdr * tcp;
         tcp = castToTCP(recv_pkt, main_hlen);
 
-        printf("FLAGS: %x\n", recv_pkt[main_hlen + 13]);
-        printf("ACK: %d\n", tcp->ack);
+        //printf("FLAGS: %x\n", recv_pkt[main_hlen + 13]);
+        //printf("ACK: %d\n", tcp->ack);
+
+        return 1;
     }
     
 	return 0;
@@ -458,7 +451,7 @@ static void
 compare_ip_packets (char * sent, int s_offset, char * rec, int r_offset, int len)
 {
     /*int i;
-    printf("\n");
+    printf("\nCompare IP\n");
     for (i = 0; i < 12; i++)
         printf("%x|", sent[s_offset + i]);
     printf("\n");
@@ -486,9 +479,10 @@ compare_ip_packets (char * sent, int s_offset, char * rec, int r_offset, int len
     }
 
     // ID
-    if ((sent[s_offset + 4] != rec[r_offset + 5]) || (sent[s_offset + 5] != rec[r_offset + 4]))
+    if ((sent[s_offset + 4] != rec[r_offset + 4]) || (sent[s_offset + 5] != rec[r_offset + 5]))
     {
-        printf("IP::ID ");
+        if ((sent[s_offset + 4] != rec[r_offset + 5]) || (sent[s_offset + 5] != rec[r_offset + 4]))
+            printf("IP::ID ");
     }
 
     // Flags
@@ -506,7 +500,7 @@ compare_ip_packets (char * sent, int s_offset, char * rec, int r_offset, int len
     // TTL
     if (sent[s_offset + 8] != rec[r_offset + 8])
     {
-        //printf("IP::TTL ");
+        printf("IP::TTL ");
     }
 
     // Protocol
@@ -516,9 +510,10 @@ compare_ip_packets (char * sent, int s_offset, char * rec, int r_offset, int len
     }
 
     // Checksum
-    if ((sent[s_offset + 10] != rec[r_offset + 11]) || (sent[s_offset + 11] != rec[r_offset + 10]))
+    if ((sent[s_offset + 10] != rec[r_offset + 10]) || (sent[s_offset + 11] != rec[r_offset + 11]))
     {
-        printf("IP::Checksum ");
+        if ((sent[s_offset + 10] != rec[r_offset + 11]) || (sent[s_offset + 11] != rec[r_offset + 10]))
+            printf("IP::Checksum ");
     }
 }
 
@@ -635,19 +630,21 @@ common_tracebox_main(char **argv)
             printf ("Warning: Cannot set HDRINCL!\n");
         
         // RECEIVE
-        xmove_fd(xsocket(AF_INET, SOCK_RAW, IPPROTO_ICMP), rcvsock); // This is for UDP
+        //xmove_fd(xsocket(AF_INET, SOCK_RAW, IPPROTO_ICMP), rcvsock); // This is for ICMP
+        xmove_fd(xsocket(AF_INET, SOCK_STREAM, IPPROTO_TCP), rcvsock); // This is for TCP
         if (rcvsock < 0)
         {
             printf("ERROR opening received socket\n");
             return 1;
         }
         
+        
         // TCP
-        /*if (connect(sndsock, &dest_lsa->u.sa, dest_lsa->len) < 0)
+        if (connect(sndsock, &dest_lsa->u.sa, dest_lsa->len) < 0)
         {
             printf("ERROR connecting");
             return 1;
-        }*/
+        }
     }
     
     // GET LOCAL IP ADDRESS
@@ -699,7 +696,7 @@ common_tracebox_main(char **argv)
 			if (probe != 0 && pausemsecs > 0)
 				usleep(pausemsecs * 1000);
             
-			send_probe(sent_datagram, ++seq, ttl, from_lsa); // use the char[] "sent_datagram"
+			send_probe(sent_datagram, ++seq, ttl, 1, 0); // Send SYN
 			t2 = t1 = monotonic_us();
             
 			left_ms = waittime * 1000;
@@ -715,12 +712,25 @@ common_tracebox_main(char **argv)
 				// Skip short packet
 				if (icmp_code == 0)
 					continue;
+
+                /* ---- STOP ------------------ */
+                if (icmp_code == 1) // ACK Received
+                {
+                    char *ina = xmalloc_sockaddr2dotted_noport(&from_lsa->u.sa);
+                    printf("%s\n", ina);
+                    got_dest = 1;
+                    got_host = 1;
+                    //if (memcmp(ina, dest_str, 15) == 0)
+                    //    printf("IP match\n");
+                    send_probe(sent_datagram, ++seq, ttl, 0, 1); // Send FIN/RST
+                    break;
+                }
                 
 				if (!gotlastaddr || (memcmp(lastaddr, &from_lsa->u.sa, from_lsa->len) != 0)) {
 					print(&from_lsa->u.sa);
 					memcpy(lastaddr, &from_lsa->u.sa, from_lsa->len);
 					gotlastaddr = 1;
-                    got_host = 1; // TBOX EDIT
+                    got_host = 1;
 				}
                 
 				//print_delta_ms(t1, t2);
@@ -740,17 +750,10 @@ common_tracebox_main(char **argv)
                 compare_ip_packets(sent_datagram, 0, recv_pkt, quoted_ip_offset, (sent_ip->ihl >= quoted_ip->ihl ? quoted_ip->ihl << 2 : sent_ip->ihl << 2));
                 
                 /* ---- TCP ------------------- */
-                int tcp_len = read_len - 20 - 8 - (quoted_ip->ihl << 2);
+                int tcp_len;
+                tcp_len = read_len - 20 - 8 - (quoted_ip->ihl << 2);
                 compare_tcp_packets(sent_datagram, 20, recv_pkt, quoted_tcp_offset, tcp_len);
 
-                /* ---- STOP ------------------ */
-                char *ina = xmalloc_sockaddr2dotted_noport(&from_lsa->u.sa);
-                if (memcmp(ina, dest_str, 15) == 0)
-                {
-                    printf("%s (got destination)\n", ina);
-                    got_dest = 1;
-                    got_host = 1;
-                }
                 /*
                  struct iphdr * received_ip;
                 received_ip = castToIP(recv_pkt, 0);
@@ -766,9 +769,9 @@ common_tracebox_main(char **argv)
 				// End the loop for this ttl
 				if (icmp_code == -1)
 					break;
-			} // while (wait and read a packet)
+			}
             
-			// there was no packet at all?
+            // No packet received
 			if (read_len == 0)
             {
 				printf("  *");
@@ -777,7 +780,7 @@ common_tracebox_main(char **argv)
                     break;
             }
 		}
-        
+
 		bb_putchar('\n');
 		if (got_there || (unreachable > 0 && unreachable >= nprobes - 1))
 			break;
