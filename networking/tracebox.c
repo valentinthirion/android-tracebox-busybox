@@ -562,7 +562,23 @@ compare_tcp_packets (char * sent, int s_offset, char * rec, int r_offset, int le
         //printf("%x%x%x%x | %x%x%x%x\n", sent[s_offset + 4], sent[s_offset + 5], sent[s_offset + 6], sent[s_offset + 7], rec[r_offset + 4], rec[r_offset + 5], rec[r_offset + 6], rec[r_offset + 7]);
     }
 
-    // Offset
+    // Ack number: no need because ICMP segment
+
+    // Header Length
+    if ((len >= 13)
+        && (sent[s_offset + 12] != rec[r_offset + 12]))
+    {
+        printf("TCP::HeaderLength ");
+        //printf("%x%x | %x%x\n", sent[s_offset + 12], rec[r_offset + 12]);
+    }
+
+    // Flags
+    if ((len >= 14)
+        && (sent[s_offset + 13] != rec[r_offset + 13]))
+    {
+        printf("TCP:Flags ");
+        //printf("%x%x | %x%x\n", sent[s_offset + 13], rec[r_offset + 13]);
+    }
 
     // Window size
     if ((len >= 16) &&
@@ -576,10 +592,81 @@ compare_tcp_packets (char * sent, int s_offset, char * rec, int r_offset, int le
     if ((len >= 18) &&
         ((sent[s_offset + 16] != rec[r_offset + 16]) || (sent[s_offset + 17] != rec[r_offset + 17])))
     {
-        printf("TCP::WindowSize ");
+        printf("TCP::Checksum ");
         //printf("%x%x | %x%x\n", sent[s_offset + 16], sent[s_offset + 17], rec[r_offset + 16], rec[r_offset + 17]);
     }
-    
+
+    // URG pointer
+    if ((len >= 20) &&
+        ((sent[s_offset + 18] != rec[r_offset + 18]) || (sent[s_offset + 19] != rec[r_offset + 19])))
+    {
+        printf("TCP::UrgPointer ");
+        //printf("%x%x | %x%x\n", sent[s_offset + 17], sent[s_offset + 17], rec[r_offset + 18], rec[r_offset + 18]);
+    }
+
+    // --  TCP Options --
+    if (len < 21)
+        return;
+
+    // TEST IF OPTION
+    int iterator;
+    iterator = 20;
+    while (iterator < len)
+    {
+        // GET OPTION TYPE
+        if (sent[s_offset + iterator] == 1) // NOP
+        {
+            if ((sent[s_offset + iterator] != rec[r_offset + iterator]))
+            {
+                printf("TCP::Option_NOP ");
+            }
+            iterator = iterator + 1; // Size of NOP option == 1
+        }
+        else if (sent[s_offset + iterator] == 2) // MMS
+        {
+            if ((sent[s_offset + iterator + 2] != rec[r_offset + iterator + 2])
+                || (sent[s_offset + iterator + 3] != rec[r_offset + iterator + 3]))
+            {
+                printf("TCP::Option_MSS ");
+            }
+            iterator = iterator + 4; // Size of MSS option == 4
+        }
+        else if (sent[s_offset + iterator] == 3) // Window scale
+        {
+            if (sent[s_offset + iterator + 2] != rec[r_offset + iterator + 2])
+            {
+                printf("TCP::Option_WS ");
+            }
+            iterator = iterator + 3; // Size of WS option == 3
+        }
+        else if (sent[s_offset + iterator] == 4) // TCP SACK Permitted
+        {
+            if (sent[s_offset + iterator + 1] != rec[r_offset + iterator + 1])
+            {
+                printf("TCP::Option_SACK ");
+            }
+            iterator = iterator + 2; // Size of SACK option == 2
+        }
+        else if (sent[s_offset + iterator] == 8) // Timestamp
+        {
+            if ((sent[s_offset + iterator + 2] != rec[r_offset + iterator + 2])
+                || (sent[s_offset + iterator + 3] != rec[r_offset + iterator + 3])
+                || (sent[s_offset + iterator + 4] != rec[r_offset + iterator + 4])
+                || (sent[s_offset + iterator + 5] != rec[r_offset + iterator + 5])
+                || (sent[s_offset + iterator + 6] != rec[r_offset + iterator + 6])
+                || (sent[s_offset + iterator + 7] != rec[r_offset + iterator + 7])
+                || (sent[s_offset + iterator + 8] != rec[r_offset + iterator + 8])
+                || (sent[s_offset + iterator + 9] != rec[r_offset + iterator + 9]))
+            {
+                printf("TCP::Option_TIMESTAMP ");
+            }
+            iterator = iterator + 10; // Size of TIMESTAMP option == 10
+        }
+        else
+        {
+            iterator++;
+        }
+    }
 }
 
 static int
@@ -630,8 +717,8 @@ common_tracebox_main(char **argv)
             printf ("Warning: Cannot set HDRINCL!\n");
         
         // RECEIVE
-        //xmove_fd(xsocket(AF_INET, SOCK_RAW, IPPROTO_ICMP), rcvsock); // This is for ICMP
-        xmove_fd(xsocket(AF_INET, SOCK_STREAM, IPPROTO_TCP), rcvsock); // This is for TCP
+        xmove_fd(xsocket(AF_INET, SOCK_RAW, IPPROTO_ICMP), rcvsock); // This is for ICMP
+        //xmove_fd(xsocket(AF_INET, SOCK_STREAM, IPPROTO_TCP), rcvsock); // This is for TCP
         if (rcvsock < 0)
         {
             printf("ERROR opening received socket\n");
@@ -774,7 +861,7 @@ common_tracebox_main(char **argv)
             // No packet received
 			if (read_len == 0)
             {
-				printf("  *");
+				printf("* ");
                 start_counter++; // Increase the counter of stars
                 if (start_counter == starts_max)
                     break;
