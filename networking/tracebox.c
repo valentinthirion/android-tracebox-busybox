@@ -77,6 +77,18 @@ struct tcp_option_windowscale
     uint8_t len;                /* 3 */
     uint8_t value;
     
+    
+}__attribute__((packed));
+
+struct tcp_option_mpcapable
+{
+    uint8_t kind;               /* 30 */
+    uint8_t len;                /* 8 */
+    uint8_t subtype;            /* 0x0 */ // => MP_CAPABLE
+    uint8_t status;             /* 0 */ // => MP_CAPABLE
+    uint32_t a_1;
+    uint32_t a_2;
+
 }__attribute__((packed));
 
 struct tcphdr_mss
@@ -87,6 +99,8 @@ struct tcphdr_mss
     struct tcp_option_timestamp timestamp;
     struct tcp_option_nop nop;
     struct tcp_option_windowscale ws;
+    struct tcp_option_mpcapable mpcapable;
+
 };
 
 struct globals {
@@ -259,6 +273,10 @@ send_probe(char datagram[], int seq, int ttl, int syn_flag, int rst_flag)
     tcp_header->ws.kind = 3;
     tcp_header->ws.len = 3;
     tcp_header->ws.value = 2;
+    // ---- MPCAPABLE
+    tcp_header->mpcapable.kind = 30;
+    tcp_header->mpcapable.len = 8;
+    tcp_header->mpcapable.subtype = 3;
 
     tcp_header->tcphdr.source = htons(48420 + seq);
     tcp_header->tcphdr.dest = htons(port);
@@ -662,6 +680,20 @@ compare_tcp_packets (char * sent, int s_offset, char * rec, int r_offset, int le
             }
             iterator = iterator + 10; // Size of TIMESTAMP option == 10
         }
+        else if (sent[s_offset + iterator] == 30) // MPTCP
+        {
+            if ((sent[s_offset + iterator + 1] != rec[r_offset + iterator + 1])
+                || (sent[s_offset + iterator + 2] != rec[r_offset + iterator + 2])
+                || (sent[s_offset + iterator + 3] != rec[r_offset + iterator + 3])
+                || (sent[s_offset + iterator + 4] != rec[r_offset + iterator + 4])
+                || (sent[s_offset + iterator + 5] != rec[r_offset + iterator + 5])
+                || (sent[s_offset + iterator + 6] != rec[r_offset + iterator + 6])
+                || (sent[s_offset + iterator + 7] != rec[r_offset + iterator + 7]))
+            {
+                printf("TCP::Option_MPTCP ");
+            }
+            iterator = iterator + 8; // Size of MPTCP option == 10
+        }
         else
         {
             iterator++;
@@ -675,7 +707,7 @@ common_tracebox_main(char **argv)
 	int max_ttl = 30;
 	int nprobes = 3;
 	int first_ttl = 1;
-    int starts_max = 20;
+    int stars_max = 7;
 	unsigned pausemsecs = 0;
 	char *dest_str;
     
@@ -863,7 +895,7 @@ common_tracebox_main(char **argv)
             {
 				printf("* ");
                 start_counter++; // Increase the counter of stars
-                if (start_counter == starts_max)
+                if (start_counter == stars_max)
                     break;
             }
 		}
@@ -873,7 +905,7 @@ common_tracebox_main(char **argv)
 			break;
 
         /* ---- STOP ------------------ */
-        if (start_counter == starts_max)
+        if (start_counter == stars_max)
             break;
 	}
 
