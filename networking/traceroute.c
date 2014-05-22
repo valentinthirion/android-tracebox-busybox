@@ -986,6 +986,7 @@ common_traceroute_main(int op, char **argv)
 	if (op & OPT_DONT_FRAGMNT)
 		setsockopt(sndsock, IPPROTO_IP, IP_DONTFRAG,
                    &const_int_1, sizeof(const_int_1));
+    printf("IP_DONTFRAG: %d", IP_DONTFRAG);
 #endif
 #if TRACEROUTE_SO_DEBUG
 	if (op & OPT_DEBUG)

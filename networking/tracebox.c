@@ -4,8 +4,6 @@
  2014
  */
 
-#define TRACEROUTE_SO_DEBUG 0
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
@@ -24,6 +22,7 @@
 
 #include <unistd.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 
 #ifndef IPPROTO_ICMP
 # define IPPROTO_ICMP            1
@@ -154,7 +153,7 @@ struct pseudo_header
 #define INIT_G() do { \
 SET_PTR_TO_GLOBALS(xzalloc(sizeof(G))); \
 port = 80; \
-waittime = 5; \
+waittime = 1; \
 } while (0)
 
 #define outicmp ((struct icmp *)(outip + 1))
@@ -302,13 +301,14 @@ send_probe(char datagram[], int seq, int ttl, int syn_flag, int rst_flag)
     sent_ip->tot_len = sizeof (struct iphdr) + sizeof (struct tcphdr_mss);
     sent_ip->id = htons(rand()); //Id of this packet
     sent_ip->frag_off = 0;
+    datagram[6] = 64; // Don't Fragment FLAG
     sent_ip->ttl = ttl;
     sent_ip->protocol = IPPROTO_TCP;
     sent_ip->check = 0;      //Set to 0 before calculating checksum
     sent_ip->saddr = inet_addr(local_addr);
     sent_ip->daddr = dest_lsa->u.sin.sin_addr.s_addr;
     // IP Checksum
-    sent_ip->check = csum((unsigned short*) datagram, 20);
+    sent_ip->check = htons(csum((unsigned short*) datagram, 20));
 
     // -------- TCP checksum
     struct pseudo_header psh;
@@ -707,7 +707,7 @@ common_tracebox_main(char **argv)
 	int max_ttl = 30;
 	int nprobes = 3;
 	int first_ttl = 1;
-    int stars_max = 7;
+    int stars_max = 10;
 	unsigned pausemsecs = 0;
 	char *dest_str;
     
@@ -756,8 +756,7 @@ common_tracebox_main(char **argv)
             printf("ERROR opening received socket\n");
             return 1;
         }
-        
-        
+
         // TCP
         if (connect(sndsock, &dest_lsa->u.sa, dest_lsa->len) < 0)
         {
