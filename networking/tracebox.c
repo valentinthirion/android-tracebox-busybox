@@ -33,6 +33,11 @@
 #ifndef IPPROTO_TCP
 # define IPPROTO_TCP             6
 #endif
+#ifndef IPPROTO_RAW
+# define IPPROTO_RAW             255
+#endif
+
+
 
 #define DATAGRAM_SIZE            4096
 
@@ -733,7 +738,8 @@ common_tracebox_main(char **argv)
     // CREATE SOCKETS
     {
         // SEND
-        xmove_fd(socket(PF_INET, SOCK_RAW, IPPROTO_TCP), sndsock); // This is for TCP
+        // xmove_fd(socket(PF_INET, SOCK_RAW, IPPROTO_TCP), sndsock); // This is for TCP
+        xmove_fd(socket(PF_INET, SOCK_RAW, IPPROTO_RAW), sndsock); // This is for TCP
         if (sndsock < 0)
         {
             printf("ERROR opening send socket\n");

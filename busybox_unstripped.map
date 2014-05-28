@@ -3191,7 +3191,7 @@ LOAD /usr/lib/gcc/i686-linux-gnu/4.6/../../../i386-linux-gnu/crtn.o
  *(SORT(.iplt))
  .iplt          0x0000000008048220      0x170 /usr/lib/gcc/i686-linux-gnu/4.6/../../../i386-linux-gnu/crt1.o
 
-.text           0x0000000008048390    0xa8b49
+.text           0x0000000008048390    0xa8b4c
  *(SORT(.text.unlikely) SORT(.text.*_unlikely))
  .text.unlikely
                 0x0000000008048390       0x6c /usr/lib/gcc/i686-linux-gnu/4.6/../../../i386-linux-gnu/libc.a(findlocale.o)
@@ -6100,461 +6100,461 @@ LOAD /usr/lib/gcc/i686-linux-gnu/4.6/../../../i386-linux-gnu/crtn.o
  .text.send_probe
                 0x00000000080ec93e      0x232 networking/lib.a(tracebox.o)
  .text.tracebox_main
-                0x00000000080ecb70      0x959 networking/lib.a(tracebox.o)
+                0x00000000080ecb70      0x95c networking/lib.a(tracebox.o)
                 0x00000000080ecb70                tracebox_main
  .text.traceroute_main
-                0x00000000080ed4c9      0x866 networking/lib.a(traceroute.o)
-                0x00000000080ed4c9                traceroute_main
+                0x00000000080ed4cc      0x866 networking/lib.a(traceroute.o)
+                0x00000000080ed4cc                traceroute_main
  .text.pipe_out
-                0x00000000080edd2f       0x76 networking/lib.a(whois.o)
+                0x00000000080edd32       0x76 networking/lib.a(whois.o)
  .text.whois_main
-                0x00000000080edda5       0x78 networking/lib.a(whois.o)
-                0x00000000080edda5                whois_main
+                0x00000000080edda8       0x78 networking/lib.a(whois.o)
+                0x00000000080edda8                whois_main
  .text.get_bits
-                0x00000000080ede1d       0x9a archival/libarchive/lib.a(decompress_bunzip2.o)
+                0x00000000080ede20       0x9a archival/libarchive/lib.a(decompress_bunzip2.o)
  .text.get_next_block
-                0x00000000080edeb7      0x5fa archival/libarchive/lib.a(decompress_bunzip2.o)
+                0x00000000080edeba      0x5fa archival/libarchive/lib.a(decompress_bunzip2.o)
  .text.read_bunzip
-                0x00000000080ee4b1      0x10c archival/libarchive/lib.a(decompress_bunzip2.o)
-                0x00000000080ee4b1                read_bunzip
+                0x00000000080ee4b4      0x10c archival/libarchive/lib.a(decompress_bunzip2.o)
+                0x00000000080ee4b4                read_bunzip
  .text.start_bunzip
-                0x00000000080ee5bd       0xc8 archival/libarchive/lib.a(decompress_bunzip2.o)
-                0x00000000080ee5bd                start_bunzip
+                0x00000000080ee5c0       0xc8 archival/libarchive/lib.a(decompress_bunzip2.o)
+                0x00000000080ee5c0                start_bunzip
  .text.dealloc_bunzip
-                0x00000000080ee685       0x15 archival/libarchive/lib.a(decompress_bunzip2.o)
-                0x00000000080ee685                dealloc_bunzip
+                0x00000000080ee688       0x15 archival/libarchive/lib.a(decompress_bunzip2.o)
+                0x00000000080ee688                dealloc_bunzip
  .text.unpack_bz2_stream
-                0x00000000080ee69a      0x169 archival/libarchive/lib.a(decompress_bunzip2.o)
-                0x00000000080ee69a                unpack_bz2_stream
+                0x00000000080ee69d      0x169 archival/libarchive/lib.a(decompress_bunzip2.o)
+                0x00000000080ee69d                unpack_bz2_stream
  .text.init_transformer_aux_data
-                0x00000000080ee803       0x10 archival/libarchive/lib.a(open_transformer.o)
-                0x00000000080ee803                init_transformer_aux_data
+                0x00000000080ee806       0x10 archival/libarchive/lib.a(open_transformer.o)
+                0x00000000080ee806                init_transformer_aux_data
  .text.check_signature16
-                0x00000000080ee813       0x46 archival/libarchive/lib.a(open_transformer.o)
-                0x00000000080ee813                check_signature16
+                0x00000000080ee816       0x46 archival/libarchive/lib.a(open_transformer.o)
+                0x00000000080ee816                check_signature16
  .text.check_errors_in_children
-                0x00000000080ee859       0x30 archival/libarchive/lib.a(open_transformer.o)
-                0x00000000080ee859                check_errors_in_children
+                0x00000000080ee85c       0x30 archival/libarchive/lib.a(open_transformer.o)
+                0x00000000080ee85c                check_errors_in_children
  .text.open_transformer
-                0x00000000080ee889       0x66 archival/libarchive/lib.a(open_transformer.o)
-                0x00000000080ee889                open_transformer
+                0x00000000080ee88c       0x66 archival/libarchive/lib.a(open_transformer.o)
+                0x00000000080ee88c                open_transformer
  .text.xmalloc_open_zipped_read_close
-                0x00000000080ee8ef       0x47 archival/libarchive/lib.a(open_transformer.o)
-                0x00000000080ee8ef                xmalloc_open_zipped_read_close
+                0x00000000080ee8f2       0x47 archival/libarchive/lib.a(open_transformer.o)
+                0x00000000080ee8f2                xmalloc_open_zipped_read_close
  .text.whoami_main
-                0x00000000080ee936       0x25 coreutils/lib.a(whoami.o)
-                0x00000000080ee936                whoami_main
+                0x00000000080ee939       0x25 coreutils/lib.a(whoami.o)
+                0x00000000080ee939                whoami_main
  .text.xgetpwnam
-                0x00000000080ee95b       0x1b libbb/lib.a(bb_pwd.o)
-                0x00000000080ee95b                xgetpwnam
+                0x00000000080ee95e       0x1b libbb/lib.a(bb_pwd.o)
+                0x00000000080ee95e                xgetpwnam
  .text.xgetgrnam
-                0x00000000080ee976       0x1b libbb/lib.a(bb_pwd.o)
-                0x00000000080ee976                xgetgrnam
+                0x00000000080ee979       0x1b libbb/lib.a(bb_pwd.o)
+                0x00000000080ee979                xgetgrnam
  .text.xgetpwuid
-                0x00000000080ee991       0x1b libbb/lib.a(bb_pwd.o)
-                0x00000000080ee991                xgetpwuid
+                0x00000000080ee994       0x1b libbb/lib.a(bb_pwd.o)
+                0x00000000080ee994                xgetpwuid
  .text.xgetgrgid
-                0x00000000080ee9ac       0x1b libbb/lib.a(bb_pwd.o)
-                0x00000000080ee9ac                xgetgrgid
+                0x00000000080ee9af       0x1b libbb/lib.a(bb_pwd.o)
+                0x00000000080ee9af                xgetgrgid
  .text.xuid2uname
-                0x00000000080ee9c7        0x8 libbb/lib.a(bb_pwd.o)
-                0x00000000080ee9c7                xuid2uname
+                0x00000000080ee9ca        0x8 libbb/lib.a(bb_pwd.o)
+                0x00000000080ee9ca                xuid2uname
  .text.xgid2group
-                0x00000000080ee9cf        0x8 libbb/lib.a(bb_pwd.o)
-                0x00000000080ee9cf                xgid2group
+                0x00000000080ee9d2        0x8 libbb/lib.a(bb_pwd.o)
+                0x00000000080ee9d2                xgid2group
  .text.uid2uname
-                0x00000000080ee9d7       0x12 libbb/lib.a(bb_pwd.o)
-                0x00000000080ee9d7                uid2uname
+                0x00000000080ee9da       0x12 libbb/lib.a(bb_pwd.o)
+                0x00000000080ee9da                uid2uname
  .text.gid2group
-                0x00000000080ee9e9       0x12 libbb/lib.a(bb_pwd.o)
-                0x00000000080ee9e9                gid2group
+                0x00000000080ee9ec       0x12 libbb/lib.a(bb_pwd.o)
+                0x00000000080ee9ec                gid2group
  .text.uid2uname_utoa
-                0x00000000080ee9fb       0x16 libbb/lib.a(bb_pwd.o)
-                0x00000000080ee9fb                uid2uname_utoa
+                0x00000000080ee9fe       0x16 libbb/lib.a(bb_pwd.o)
+                0x00000000080ee9fe                uid2uname_utoa
  .text.gid2group_utoa
-                0x00000000080eea11       0x16 libbb/lib.a(bb_pwd.o)
-                0x00000000080eea11                gid2group_utoa
+                0x00000000080eea14       0x16 libbb/lib.a(bb_pwd.o)
+                0x00000000080eea14                gid2group_utoa
  .text.xuname2uid
-                0x00000000080eea27        0x9 libbb/lib.a(bb_pwd.o)
-                0x00000000080eea27                xuname2uid
+                0x00000000080eea2a        0x9 libbb/lib.a(bb_pwd.o)
+                0x00000000080eea2a                xuname2uid
  .text.xgroup2gid
-                0x00000000080eea30        0x9 libbb/lib.a(bb_pwd.o)
-                0x00000000080eea30                xgroup2gid
+                0x00000000080eea33        0x9 libbb/lib.a(bb_pwd.o)
+                0x00000000080eea33                xgroup2gid
  .text.get_ug_id
-                0x00000000080eea39       0x24 libbb/lib.a(bb_pwd.o)
-                0x00000000080eea39                get_ug_id
+                0x00000000080eea3c       0x24 libbb/lib.a(bb_pwd.o)
+                0x00000000080eea3c                get_ug_id
  .text.change_identity
-                0x00000000080eea5d       0x32 libbb/lib.a(change_identity.o)
-                0x00000000080eea5d                change_identity
+                0x00000000080eea60       0x32 libbb/lib.a(change_identity.o)
+                0x00000000080eea60                change_identity
  .text.ask_and_check_password_extended
-                0x00000000080eea8f       0x5d libbb/lib.a(correct_password.o)
-                0x00000000080eea8f                ask_and_check_password_extended
+                0x00000000080eea92       0x5d libbb/lib.a(correct_password.o)
+                0x00000000080eea92                ask_and_check_password_extended
  .text.ask_and_check_password
-                0x00000000080eeaec        0xc libbb/lib.a(correct_password.o)
-                0x00000000080eeaec                ask_and_check_password
+                0x00000000080eeaef        0xc libbb/lib.a(correct_password.o)
+                0x00000000080eeaef                ask_and_check_password
  .text.crc32_filltable
-                0x00000000080eeaf8       0x63 libbb/lib.a(crc32.o)
-                0x00000000080eeaf8                crc32_filltable
+                0x00000000080eeafb       0x63 libbb/lib.a(crc32.o)
+                0x00000000080eeafb                crc32_filltable
  .text.crc32_block_endian1
-                0x00000000080eeb5b       0x28 libbb/lib.a(crc32.o)
-                0x00000000080eeb5b                crc32_block_endian1
+                0x00000000080eeb5e       0x28 libbb/lib.a(crc32.o)
+                0x00000000080eeb5e                crc32_block_endian1
  .text.crc32_block_endian0
-                0x00000000080eeb83       0x29 libbb/lib.a(crc32.o)
-                0x00000000080eeb83                crc32_block_endian0
+                0x00000000080eeb86       0x29 libbb/lib.a(crc32.o)
+                0x00000000080eeb86                crc32_block_endian0
  .text.getopt32
-                0x00000000080eebac      0x5f5 libbb/lib.a(getopt32.o)
-                0x00000000080eebac                getopt32
+                0x00000000080eebaf      0x5f5 libbb/lib.a(getopt32.o)
+                0x00000000080eebaf                getopt32
  .text.inet_cksum
-                0x00000000080ef1a1       0x34 libbb/lib.a(inet_cksum.o)
-                0x00000000080ef1a1                inet_cksum
+                0x00000000080ef1a4       0x34 libbb/lib.a(inet_cksum.o)
+                0x00000000080ef1a4                inet_cksum
  .text.bb_info_msg
-                0x00000000080ef1d5       0x77 libbb/lib.a(info_msg.o)
-                0x00000000080ef1d5                bb_info_msg
+                0x00000000080ef1d8       0x77 libbb/lib.a(info_msg.o)
+                0x00000000080ef1d8                bb_info_msg
  .text.nuke_str
-                0x00000000080ef24c       0x10 libbb/lib.a(nuke_str.o)
-                0x00000000080ef24c                nuke_str
+                0x00000000080ef24f       0x10 libbb/lib.a(nuke_str.o)
+                0x00000000080ef24f                nuke_str
  .text.config_open2
-                0x00000000080ef25c       0x16 libbb/lib.a(parse_config.o)
-                0x00000000080ef25c                config_open2
+                0x00000000080ef25f       0x16 libbb/lib.a(parse_config.o)
+                0x00000000080ef25f                config_open2
  .text.config_open
-                0x00000000080ef272        0xa libbb/lib.a(parse_config.o)
-                0x00000000080ef272                config_open
+                0x00000000080ef275        0xa libbb/lib.a(parse_config.o)
+                0x00000000080ef275                config_open
  .text.config_close
-                0x00000000080ef27c       0x29 libbb/lib.a(parse_config.o)
-                0x00000000080ef27c                config_close
+                0x00000000080ef27f       0x29 libbb/lib.a(parse_config.o)
+                0x00000000080ef27f                config_close
  .text.config_read
-                0x00000000080ef2a5      0x21b libbb/lib.a(parse_config.o)
-                0x00000000080ef2a5                config_read
- .text.i64c     0x00000000080ef4c0       0x29 libbb/lib.a(pw_encrypt.o)
+                0x00000000080ef2a8      0x21b libbb/lib.a(parse_config.o)
+                0x00000000080ef2a8                config_read
+ .text.i64c     0x00000000080ef4c3       0x29 libbb/lib.a(pw_encrypt.o)
  .text.crypt_make_salt
-                0x00000000080ef4e9       0x59 libbb/lib.a(pw_encrypt.o)
-                0x00000000080ef4e9                crypt_make_salt
+                0x00000000080ef4ec       0x59 libbb/lib.a(pw_encrypt.o)
+                0x00000000080ef4ec                crypt_make_salt
  .text.crypt_make_pw_salt
-                0x00000000080ef542       0x57 libbb/lib.a(pw_encrypt.o)
-                0x00000000080ef542                crypt_make_pw_salt
+                0x00000000080ef545       0x57 libbb/lib.a(pw_encrypt.o)
+                0x00000000080ef545                crypt_make_pw_salt
  .text.pw_encrypt
-                0x00000000080ef599        0xe libbb/lib.a(pw_encrypt.o)
-                0x00000000080ef599                pw_encrypt
+                0x00000000080ef59c        0xe libbb/lib.a(pw_encrypt.o)
+                0x00000000080ef59c                pw_encrypt
  .text.nonblock_immune_read
-                0x00000000080ef5a7       0x78 libbb/lib.a(read_printf.o)
-                0x00000000080ef5a7                nonblock_immune_read
+                0x00000000080ef5aa       0x78 libbb/lib.a(read_printf.o)
+                0x00000000080ef5aa                nonblock_immune_read
  .text.xmalloc_reads
-                0x00000000080ef61f       0x94 libbb/lib.a(read_printf.o)
-                0x00000000080ef61f                xmalloc_reads
+                0x00000000080ef622       0x94 libbb/lib.a(read_printf.o)
+                0x00000000080ef622                xmalloc_reads
  .text.xmalloc_read
-                0x00000000080ef6b3       0xc0 libbb/lib.a(read_printf.o)
-                0x00000000080ef6b3                xmalloc_read
+                0x00000000080ef6b6       0xc0 libbb/lib.a(read_printf.o)
+                0x00000000080ef6b6                xmalloc_read
  .text.xmalloc_open_read_close
-                0x00000000080ef773       0x32 libbb/lib.a(read_printf.o)
-                0x00000000080ef773                xmalloc_open_read_close
- .text.xread    0x00000000080ef7a5       0x1c libbb/lib.a(read_printf.o)
-                0x00000000080ef7a5                xread
+                0x00000000080ef776       0x32 libbb/lib.a(read_printf.o)
+                0x00000000080ef776                xmalloc_open_read_close
+ .text.xread    0x00000000080ef7a8       0x1c libbb/lib.a(read_printf.o)
+                0x00000000080ef7a8                xread
  .text.xread_char
-                0x00000000080ef7c1       0x15 libbb/lib.a(read_printf.o)
-                0x00000000080ef7c1                xread_char
+                0x00000000080ef7c4       0x15 libbb/lib.a(read_printf.o)
+                0x00000000080ef7c4                xread_char
  .text.xmalloc_xopen_read_close
-                0x00000000080ef7d6       0x19 libbb/lib.a(read_printf.o)
-                0x00000000080ef7d6                xmalloc_xopen_read_close
+                0x00000000080ef7d9       0x19 libbb/lib.a(read_printf.o)
+                0x00000000080ef7d9                xmalloc_xopen_read_close
  .text.run_shell
-                0x00000000080ef7ef       0xa8 libbb/lib.a(run_shell.o)
-                0x00000000080ef7ef                run_shell
+                0x00000000080ef7f2       0xa8 libbb/lib.a(run_shell.o)
+                0x00000000080ef7f2                run_shell
  .text.safe_poll
-                0x00000000080ef897       0x4e libbb/lib.a(safe_poll.o)
-                0x00000000080ef897                safe_poll
+                0x00000000080ef89a       0x4e libbb/lib.a(safe_poll.o)
+                0x00000000080ef89a                safe_poll
  .text.safe_strncpy
-                0x00000000080ef8e5       0x1a libbb/lib.a(safe_strncpy.o)
-                0x00000000080ef8e5                safe_strncpy
+                0x00000000080ef8e8       0x1a libbb/lib.a(safe_strncpy.o)
+                0x00000000080ef8e8                safe_strncpy
  .text.overlapping_strcpy
-                0x00000000080ef8ff       0x14 libbb/lib.a(safe_strncpy.o)
-                0x00000000080ef8ff                overlapping_strcpy
+                0x00000000080ef902       0x14 libbb/lib.a(safe_strncpy.o)
+                0x00000000080ef902                overlapping_strcpy
  .text.setup_environment
-                0x00000000080ef913       0xdb libbb/lib.a(setup_environment.o)
-                0x00000000080ef913                setup_environment
+                0x00000000080ef916       0xdb libbb/lib.a(setup_environment.o)
+                0x00000000080ef916                setup_environment
  .text.record_signo
-                0x00000000080ef9ee        0xa libbb/lib.a(signals.o)
-                0x00000000080ef9ee                record_signo
+                0x00000000080ef9f1        0xa libbb/lib.a(signals.o)
+                0x00000000080ef9f1                record_signo
  .text.sigaction_set
-                0x00000000080ef9f8        0xd libbb/lib.a(signals.o)
-                0x00000000080ef9f8                sigaction_set
+                0x00000000080ef9fb        0xd libbb/lib.a(signals.o)
+                0x00000000080ef9fb                sigaction_set
  .text.sigprocmask_allsigs
-                0x00000000080efa05       0x21 libbb/lib.a(signals.o)
-                0x00000000080efa05                sigprocmask_allsigs
+                0x00000000080efa08       0x21 libbb/lib.a(signals.o)
+                0x00000000080efa08                sigprocmask_allsigs
  .text.bb_signals
-                0x00000000080efa26       0x2c libbb/lib.a(signals.o)
-                0x00000000080efa26                bb_signals
+                0x00000000080efa29       0x2c libbb/lib.a(signals.o)
+                0x00000000080efa29                bb_signals
  .text.bb_signals_recursive_norestart
-                0x00000000080efa52       0x44 libbb/lib.a(signals.o)
-                0x00000000080efa52                bb_signals_recursive_norestart
+                0x00000000080efa55       0x44 libbb/lib.a(signals.o)
+                0x00000000080efa55                bb_signals_recursive_norestart
  .text.sig_block
-                0x00000000080efa96       0x29 libbb/lib.a(signals.o)
-                0x00000000080efa96                sig_block
+                0x00000000080efa99       0x29 libbb/lib.a(signals.o)
+                0x00000000080efa99                sig_block
  .text.sig_unblock
-                0x00000000080efabf       0x29 libbb/lib.a(signals.o)
-                0x00000000080efabf                sig_unblock
+                0x00000000080efac2       0x29 libbb/lib.a(signals.o)
+                0x00000000080efac2                sig_unblock
  .text.wait_for_any_sig
-                0x00000000080efae8       0x1a libbb/lib.a(signals.o)
-                0x00000000080efae8                wait_for_any_sig
+                0x00000000080efaeb       0x1a libbb/lib.a(signals.o)
+                0x00000000080efaeb                wait_for_any_sig
  .text.kill_myself_with_sig
-                0x00000000080efb02       0x21 libbb/lib.a(signals.o)
-                0x00000000080efb02                kill_myself_with_sig
+                0x00000000080efb05       0x21 libbb/lib.a(signals.o)
+                0x00000000080efb05                kill_myself_with_sig
  .text.signal_SA_RESTART_empty_mask
-                0x00000000080efb23       0x37 libbb/lib.a(signals.o)
-                0x00000000080efb23                signal_SA_RESTART_empty_mask
+                0x00000000080efb26       0x37 libbb/lib.a(signals.o)
+                0x00000000080efb26                signal_SA_RESTART_empty_mask
  .text.signal_no_SA_RESTART_empty_mask
-                0x00000000080efb5a       0x2c libbb/lib.a(signals.o)
-                0x00000000080efb5a                signal_no_SA_RESTART_empty_mask
+                0x00000000080efb5d       0x2c libbb/lib.a(signals.o)
+                0x00000000080efb5d                signal_no_SA_RESTART_empty_mask
  .text.socket_want_pktinfo
-                0x00000000080efb86       0x15 libbb/lib.a(udp_io.o)
-                0x00000000080efb86                socket_want_pktinfo
+                0x00000000080efb89       0x15 libbb/lib.a(udp_io.o)
+                0x00000000080efb89                socket_want_pktinfo
  .text.send_to_from
-                0x00000000080efb9b       0xcb libbb/lib.a(udp_io.o)
-                0x00000000080efb9b                send_to_from
+                0x00000000080efb9e       0xcb libbb/lib.a(udp_io.o)
+                0x00000000080efb9e                send_to_from
  .text.recv_from_to
-                0x00000000080efc66       0xc4 libbb/lib.a(udp_io.o)
-                0x00000000080efc66                recv_from_to
+                0x00000000080efc69       0xc4 libbb/lib.a(udp_io.o)
+                0x00000000080efc69                recv_from_to
  .text.wcrtomb_internal
-                0x00000000080efd2a       0x55 libbb/lib.a(unicode.o)
+                0x00000000080efd2d       0x55 libbb/lib.a(unicode.o)
  .text.mbstowc_internal
-                0x00000000080efd7f       0x60 libbb/lib.a(unicode.o)
+                0x00000000080efd82       0x60 libbb/lib.a(unicode.o)
  .text.bb_wcrtomb
-                0x00000000080efddf        0x5 libbb/lib.a(unicode.o)
-                0x00000000080efddf                bb_wcrtomb
+                0x00000000080efde2        0x5 libbb/lib.a(unicode.o)
+                0x00000000080efde2                bb_wcrtomb
  .text.bb_wcstombs
-                0x00000000080efde4       0x9f libbb/lib.a(unicode.o)
-                0x00000000080efde4                bb_wcstombs
+                0x00000000080efde7       0x9f libbb/lib.a(unicode.o)
+                0x00000000080efde7                bb_wcstombs
  .text.bb_mbstowcs
-                0x00000000080efe83       0x3d libbb/lib.a(unicode.o)
-                0x00000000080efe83                bb_mbstowcs
+                0x00000000080efe86       0x3d libbb/lib.a(unicode.o)
+                0x00000000080efe86                bb_mbstowcs
  .text.bb_iswspace
-                0x00000000080efec0       0x1e libbb/lib.a(unicode.o)
-                0x00000000080efec0                bb_iswspace
+                0x00000000080efec3       0x1e libbb/lib.a(unicode.o)
+                0x00000000080efec3                bb_iswspace
  .text.bb_iswalnum
-                0x00000000080efede       0x21 libbb/lib.a(unicode.o)
-                0x00000000080efede                bb_iswalnum
+                0x00000000080efee1       0x21 libbb/lib.a(unicode.o)
+                0x00000000080efee1                bb_iswalnum
  .text.bb_iswpunct
-                0x00000000080efeff       0x1f libbb/lib.a(unicode.o)
-                0x00000000080efeff                bb_iswpunct
+                0x00000000080eff02       0x1f libbb/lib.a(unicode.o)
+                0x00000000080eff02                bb_iswpunct
  .text.bb_wcwidth
-                0x00000000080eff1e       0x28 libbb/lib.a(unicode.o)
-                0x00000000080eff1e                bb_wcwidth
+                0x00000000080eff21       0x28 libbb/lib.a(unicode.o)
+                0x00000000080eff21                bb_wcwidth
  .text.unicode_conv_to_printable2
-                0x00000000080eff46       0xc4 libbb/lib.a(unicode.o)
+                0x00000000080eff49       0xc4 libbb/lib.a(unicode.o)
  .text.unicode_strlen
-                0x00000000080f000a       0x1f libbb/lib.a(unicode.o)
-                0x00000000080f000a                unicode_strlen
+                0x00000000080f000d       0x1f libbb/lib.a(unicode.o)
+                0x00000000080f000d                unicode_strlen
  .text.unicode_strwidth
-                0x00000000080f0029       0x14 libbb/lib.a(unicode.o)
-                0x00000000080f0029                unicode_strwidth
+                0x00000000080f002c       0x14 libbb/lib.a(unicode.o)
+                0x00000000080f002c                unicode_strwidth
  .text.unicode_conv_to_printable
-                0x00000000080f003d        0xd libbb/lib.a(unicode.o)
-                0x00000000080f003d                unicode_conv_to_printable
+                0x00000000080f0040        0xd libbb/lib.a(unicode.o)
+                0x00000000080f0040                unicode_conv_to_printable
  .text.unicode_conv_to_printable_fixedwidth
-                0x00000000080f004a        0xe libbb/lib.a(unicode.o)
-                0x00000000080f004a                unicode_conv_to_printable_fixedwidth
- .text.spawn    0x00000000080f0058       0x62 libbb/lib.a(vfork_daemon_rexec.o)
-                0x00000000080f0058                spawn
- .text.xspawn   0x00000000080f00ba       0x15 libbb/lib.a(vfork_daemon_rexec.o)
-                0x00000000080f00ba                xspawn
+                0x00000000080f004d        0xe libbb/lib.a(unicode.o)
+                0x00000000080f004d                unicode_conv_to_printable_fixedwidth
+ .text.spawn    0x00000000080f005b       0x62 libbb/lib.a(vfork_daemon_rexec.o)
+                0x00000000080f005b                spawn
+ .text.xspawn   0x00000000080f00bd       0x15 libbb/lib.a(vfork_daemon_rexec.o)
+                0x00000000080f00bd                xspawn
  .text.spawn_and_wait
-                0x00000000080f00cf        0xa libbb/lib.a(vfork_daemon_rexec.o)
-                0x00000000080f00cf                spawn_and_wait
+                0x00000000080f00d2        0xa libbb/lib.a(vfork_daemon_rexec.o)
+                0x00000000080f00d2                spawn_and_wait
  .text.bb_daemonize_or_rexec
-                0x00000000080f00d9       0xca libbb/lib.a(vfork_daemon_rexec.o)
-                0x00000000080f00d9                bb_daemonize_or_rexec
+                0x00000000080f00dc       0xca libbb/lib.a(vfork_daemon_rexec.o)
+                0x00000000080f00dc                bb_daemonize_or_rexec
  .text.bb_sanitize_stdio
-                0x00000000080f01a3        0xa libbb/lib.a(vfork_daemon_rexec.o)
-                0x00000000080f01a3                bb_sanitize_stdio
+                0x00000000080f01a6        0xa libbb/lib.a(vfork_daemon_rexec.o)
+                0x00000000080f01a6                bb_sanitize_stdio
  .text.fopen_or_warn_stdin
-                0x00000000080f01ad       0x25 libbb/lib.a(wfopen_input.o)
-                0x00000000080f01ad                fopen_or_warn_stdin
+                0x00000000080f01b0       0x25 libbb/lib.a(wfopen_input.o)
+                0x00000000080f01b0                fopen_or_warn_stdin
  .text.xfopen_stdin
-                0x00000000080f01d2        0xf libbb/lib.a(wfopen_input.o)
-                0x00000000080f01d2                xfopen_stdin
+                0x00000000080f01d5        0xf libbb/lib.a(wfopen_input.o)
+                0x00000000080f01d5                xfopen_stdin
  .text.open_or_warn_stdin
-                0x00000000080f01e1       0x1c libbb/lib.a(wfopen_input.o)
-                0x00000000080f01e1                open_or_warn_stdin
+                0x00000000080f01e4       0x1c libbb/lib.a(wfopen_input.o)
+                0x00000000080f01e4                open_or_warn_stdin
  .text.xopen_stdin
-                0x00000000080f01fd        0xf libbb/lib.a(wfopen_input.o)
-                0x00000000080f01fd                xopen_stdin
+                0x00000000080f0200        0xf libbb/lib.a(wfopen_input.o)
+                0x00000000080f0200                xopen_stdin
  .text.xstrtoull_range_sfx
-                0x00000000080f020c      0x143 libbb/lib.a(xatonum.o)
-                0x00000000080f020c                xstrtoull_range_sfx
+                0x00000000080f020f      0x143 libbb/lib.a(xatonum.o)
+                0x00000000080f020f                xstrtoull_range_sfx
  .text.xstrtoull_range
-                0x00000000080f034f       0x20 libbb/lib.a(xatonum.o)
-                0x00000000080f034f                xstrtoull_range
+                0x00000000080f0352       0x20 libbb/lib.a(xatonum.o)
+                0x00000000080f0352                xstrtoull_range
  .text.xstrtoull_sfx
-                0x00000000080f036f       0x17 libbb/lib.a(xatonum.o)
-                0x00000000080f036f                xstrtoull_sfx
+                0x00000000080f0372       0x17 libbb/lib.a(xatonum.o)
+                0x00000000080f0372                xstrtoull_sfx
  .text.xstrtoull
-                0x00000000080f0386       0x18 libbb/lib.a(xatonum.o)
-                0x00000000080f0386                xstrtoull
+                0x00000000080f0389       0x18 libbb/lib.a(xatonum.o)
+                0x00000000080f0389                xstrtoull
  .text.xatoull_range_sfx
-                0x00000000080f039e       0x22 libbb/lib.a(xatonum.o)
-                0x00000000080f039e                xatoull_range_sfx
+                0x00000000080f03a1       0x22 libbb/lib.a(xatonum.o)
+                0x00000000080f03a1                xatoull_range_sfx
  .text.xatoull_range
-                0x00000000080f03c0       0x21 libbb/lib.a(xatonum.o)
-                0x00000000080f03c0                xatoull_range
+                0x00000000080f03c3       0x21 libbb/lib.a(xatonum.o)
+                0x00000000080f03c3                xatoull_range
  .text.xatoull_sfx
-                0x00000000080f03e1       0x1c libbb/lib.a(xatonum.o)
-                0x00000000080f03e1                xatoull_sfx
- .text.xatoull  0x00000000080f03fd        0xd libbb/lib.a(xatonum.o)
-                0x00000000080f03fd                xatoull
+                0x00000000080f03e4       0x1c libbb/lib.a(xatonum.o)
+                0x00000000080f03e4                xatoull_sfx
+ .text.xatoull  0x00000000080f0400        0xd libbb/lib.a(xatonum.o)
+                0x00000000080f0400                xatoull
  .text.xstrtoll_range_sfx
-                0x00000000080f040a       0xa5 libbb/lib.a(xatonum.o)
-                0x00000000080f040a                xstrtoll_range_sfx
+                0x00000000080f040d       0xa5 libbb/lib.a(xatonum.o)
+                0x00000000080f040d                xstrtoll_range_sfx
  .text.xstrtoll_range
-                0x00000000080f04af       0x20 libbb/lib.a(xatonum.o)
-                0x00000000080f04af                xstrtoll_range
+                0x00000000080f04b2       0x20 libbb/lib.a(xatonum.o)
+                0x00000000080f04b2                xstrtoll_range
  .text.xstrtoll
-                0x00000000080f04cf       0x1e libbb/lib.a(xatonum.o)
-                0x00000000080f04cf                xstrtoll
+                0x00000000080f04d2       0x1e libbb/lib.a(xatonum.o)
+                0x00000000080f04d2                xstrtoll
  .text.xatoll_range_sfx
-                0x00000000080f04ed       0x22 libbb/lib.a(xatonum.o)
-                0x00000000080f04ed                xatoll_range_sfx
+                0x00000000080f04f0       0x22 libbb/lib.a(xatonum.o)
+                0x00000000080f04f0                xatoll_range_sfx
  .text.xatoll_range
-                0x00000000080f050f       0x21 libbb/lib.a(xatonum.o)
-                0x00000000080f050f                xatoll_range
+                0x00000000080f0512       0x21 libbb/lib.a(xatonum.o)
+                0x00000000080f0512                xatoll_range
  .text.xatoll_sfx
-                0x00000000080f0530       0x22 libbb/lib.a(xatonum.o)
-                0x00000000080f0530                xatoll_sfx
- .text.xatoll   0x00000000080f0552       0x23 libbb/lib.a(xatonum.o)
-                0x00000000080f0552                xatoll
+                0x00000000080f0533       0x22 libbb/lib.a(xatonum.o)
+                0x00000000080f0533                xatoll_sfx
+ .text.xatoll   0x00000000080f0555       0x23 libbb/lib.a(xatonum.o)
+                0x00000000080f0555                xatoll
  .text.xstrtoul_range_sfx
-                0x00000000080f0575       0xe9 libbb/lib.a(xatonum.o)
-                0x00000000080f0575                xstrtoul_range_sfx
+                0x00000000080f0578       0xe9 libbb/lib.a(xatonum.o)
+                0x00000000080f0578                xstrtoul_range_sfx
  .text.xstrtoul_range
-                0x00000000080f065e        0xe libbb/lib.a(xatonum.o)
-                0x00000000080f065e                xstrtoul_range
+                0x00000000080f0661        0xe libbb/lib.a(xatonum.o)
+                0x00000000080f0661                xstrtoul_range
  .text.xstrtoul_sfx
-                0x00000000080f066c        0xb libbb/lib.a(xatonum.o)
-                0x00000000080f066c                xstrtoul_sfx
+                0x00000000080f066f        0xb libbb/lib.a(xatonum.o)
+                0x00000000080f066f                xstrtoul_sfx
  .text.xstrtoul
-                0x00000000080f0677        0xc libbb/lib.a(xatonum.o)
-                0x00000000080f0677                xstrtoul
+                0x00000000080f067a        0xc libbb/lib.a(xatonum.o)
+                0x00000000080f067a                xstrtoul
  .text.xatoul_range_sfx
-                0x00000000080f0683       0x14 libbb/lib.a(xatonum.o)
-                0x00000000080f0683                xatoul_range_sfx
+                0x00000000080f0686       0x14 libbb/lib.a(xatonum.o)
+                0x00000000080f0686                xatoul_range_sfx
  .text.xatoul_range
-                0x00000000080f0697       0x10 libbb/lib.a(xatonum.o)
-                0x00000000080f0697                xatoul_range
+                0x00000000080f069a       0x10 libbb/lib.a(xatonum.o)
+                0x00000000080f069a                xatoul_range
  .text.xatoul_sfx
-                0x00000000080f06a7       0x10 libbb/lib.a(xatonum.o)
-                0x00000000080f06a7                xatoul_sfx
- .text.xatoul   0x00000000080f06b7        0x7 libbb/lib.a(xatonum.o)
-                0x00000000080f06b7                xatoul
+                0x00000000080f06aa       0x10 libbb/lib.a(xatonum.o)
+                0x00000000080f06aa                xatoul_sfx
+ .text.xatoul   0x00000000080f06ba        0x7 libbb/lib.a(xatonum.o)
+                0x00000000080f06ba                xatoul
  .text.xstrtol_range_sfx
-                0x00000000080f06be       0x68 libbb/lib.a(xatonum.o)
-                0x00000000080f06be                xstrtol_range_sfx
+                0x00000000080f06c1       0x68 libbb/lib.a(xatonum.o)
+                0x00000000080f06c1                xstrtol_range_sfx
  .text.xstrtol_range
-                0x00000000080f0726        0xe libbb/lib.a(xatonum.o)
-                0x00000000080f0726                xstrtol_range
- .text.xstrtol  0x00000000080f0734       0x12 libbb/lib.a(xatonum.o)
-                0x00000000080f0734                xstrtol
+                0x00000000080f0729        0xe libbb/lib.a(xatonum.o)
+                0x00000000080f0729                xstrtol_range
+ .text.xstrtol  0x00000000080f0737       0x12 libbb/lib.a(xatonum.o)
+                0x00000000080f0737                xstrtol
  .text.xatol_range_sfx
-                0x00000000080f0746       0x14 libbb/lib.a(xatonum.o)
-                0x00000000080f0746                xatol_range_sfx
+                0x00000000080f0749       0x14 libbb/lib.a(xatonum.o)
+                0x00000000080f0749                xatol_range_sfx
  .text.xatol_range
-                0x00000000080f075a       0x10 libbb/lib.a(xatonum.o)
-                0x00000000080f075a                xatol_range
+                0x00000000080f075d       0x10 libbb/lib.a(xatonum.o)
+                0x00000000080f075d                xatol_range
  .text.xatol_sfx
-                0x00000000080f076a       0x16 libbb/lib.a(xatonum.o)
-                0x00000000080f076a                xatol_sfx
- .text.xatol    0x00000000080f0780       0x17 libbb/lib.a(xatonum.o)
-                0x00000000080f0780                xatol
+                0x00000000080f076d       0x16 libbb/lib.a(xatonum.o)
+                0x00000000080f076d                xatol_sfx
+ .text.xatol    0x00000000080f0783       0x17 libbb/lib.a(xatonum.o)
+                0x00000000080f0783                xatol
  .text.xatoi_positive
-                0x00000000080f0797        0xc libbb/lib.a(xatonum.o)
-                0x00000000080f0797                xatoi_positive
- .text.xatou16  0x00000000080f07a3        0xd libbb/lib.a(xatonum.o)
-                0x00000000080f07a3                xatou16
+                0x00000000080f079a        0xc libbb/lib.a(xatonum.o)
+                0x00000000080f079a                xatoi_positive
+ .text.xatou16  0x00000000080f07a6        0xd libbb/lib.a(xatonum.o)
+                0x00000000080f07a6                xatou16
  .text.sockaddr2str
-                0x00000000080f07b0       0x84 libbb/lib.a(xconnect.o)
- .text.get_lsa  0x00000000080f0834       0x79 libbb/lib.a(xconnect.o)
+                0x00000000080f07b3       0x84 libbb/lib.a(xconnect.o)
+ .text.get_lsa  0x00000000080f0837       0x79 libbb/lib.a(xconnect.o)
  .text.setsockopt_reuseaddr
-                0x00000000080f08ad       0x15 libbb/lib.a(xconnect.o)
-                0x00000000080f08ad                setsockopt_reuseaddr
+                0x00000000080f08b0       0x15 libbb/lib.a(xconnect.o)
+                0x00000000080f08b0                setsockopt_reuseaddr
  .text.setsockopt_broadcast
-                0x00000000080f08c2       0x15 libbb/lib.a(xconnect.o)
-                0x00000000080f08c2                setsockopt_broadcast
+                0x00000000080f08c5       0x15 libbb/lib.a(xconnect.o)
+                0x00000000080f08c5                setsockopt_broadcast
  .text.setsockopt_bindtodevice
-                0x00000000080f08d7       0x62 libbb/lib.a(xconnect.o)
-                0x00000000080f08d7                setsockopt_bindtodevice
+                0x00000000080f08da       0x62 libbb/lib.a(xconnect.o)
+                0x00000000080f08da                setsockopt_bindtodevice
  .text.get_sock_lsa
-                0x00000000080f0939        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0939                get_sock_lsa
+                0x00000000080f093c        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f093c                get_sock_lsa
  .text.get_peer_lsa
-                0x00000000080f0943        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0943                get_peer_lsa
+                0x00000000080f0946        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0946                get_peer_lsa
  .text.xconnect
-                0x00000000080f094d       0x3c libbb/lib.a(xconnect.o)
-                0x00000000080f094d                xconnect
+                0x00000000080f0950       0x3c libbb/lib.a(xconnect.o)
+                0x00000000080f0950                xconnect
  .text.bb_lookup_port
-                0x00000000080f0989       0x5f libbb/lib.a(xconnect.o)
-                0x00000000080f0989                bb_lookup_port
+                0x00000000080f098c       0x5f libbb/lib.a(xconnect.o)
+                0x00000000080f098c                bb_lookup_port
  .text.get_nport
-                0x00000000080f09e8       0x10 libbb/lib.a(xconnect.o)
-                0x00000000080f09e8                get_nport
+                0x00000000080f09eb       0x10 libbb/lib.a(xconnect.o)
+                0x00000000080f09eb                get_nport
  .text.set_nport
-                0x00000000080f09f8        0xb libbb/lib.a(xconnect.o)
-                0x00000000080f09f8                set_nport
+                0x00000000080f09fb        0xb libbb/lib.a(xconnect.o)
+                0x00000000080f09fb                set_nport
  .text.str2sockaddr
-                0x00000000080f0a03      0x17f libbb/lib.a(xconnect.o)
+                0x00000000080f0a06      0x17f libbb/lib.a(xconnect.o)
  .text.host2sockaddr
-                0x00000000080f0b82        0x7 libbb/lib.a(xconnect.o)
-                0x00000000080f0b82                host2sockaddr
+                0x00000000080f0b85        0x7 libbb/lib.a(xconnect.o)
+                0x00000000080f0b85                host2sockaddr
  .text.xhost2sockaddr
-                0x00000000080f0b89        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0b89                xhost2sockaddr
+                0x00000000080f0b8c        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0b8c                xhost2sockaddr
  .text.xdotted2sockaddr
-                0x00000000080f0b93        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0b93                xdotted2sockaddr
+                0x00000000080f0b96        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0b96                xdotted2sockaddr
  .text.xsocket_type
-                0x00000000080f0b9d       0x43 libbb/lib.a(xconnect.o)
-                0x00000000080f0b9d                xsocket_type
+                0x00000000080f0ba0       0x43 libbb/lib.a(xconnect.o)
+                0x00000000080f0ba0                xsocket_type
  .text.create_and_bind_or_die
-                0x00000000080f0be0       0x6e libbb/lib.a(xconnect.o)
+                0x00000000080f0be3       0x6e libbb/lib.a(xconnect.o)
  .text.xsocket_stream
-                0x00000000080f0c4e        0xc libbb/lib.a(xconnect.o)
-                0x00000000080f0c4e                xsocket_stream
+                0x00000000080f0c51        0xc libbb/lib.a(xconnect.o)
+                0x00000000080f0c51                xsocket_stream
  .text.create_and_bind_stream_or_die
-                0x00000000080f0c5a        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0c5a                create_and_bind_stream_or_die
+                0x00000000080f0c5d        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0c5d                create_and_bind_stream_or_die
  .text.create_and_bind_dgram_or_die
-                0x00000000080f0c64        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0c64                create_and_bind_dgram_or_die
+                0x00000000080f0c67        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0c67                create_and_bind_dgram_or_die
  .text.create_and_connect_stream_or_die
-                0x00000000080f0c6e       0x38 libbb/lib.a(xconnect.o)
-                0x00000000080f0c6e                create_and_connect_stream_or_die
+                0x00000000080f0c71       0x38 libbb/lib.a(xconnect.o)
+                0x00000000080f0c71                create_and_connect_stream_or_die
  .text.xconnect_stream
-                0x00000000080f0ca6       0x25 libbb/lib.a(xconnect.o)
-                0x00000000080f0ca6                xconnect_stream
+                0x00000000080f0ca9       0x25 libbb/lib.a(xconnect.o)
+                0x00000000080f0ca9                xconnect_stream
  .text.xmalloc_sockaddr2host
-                0x00000000080f0ccb        0x7 libbb/lib.a(xconnect.o)
-                0x00000000080f0ccb                xmalloc_sockaddr2host
+                0x00000000080f0cce        0x7 libbb/lib.a(xconnect.o)
+                0x00000000080f0cce                xmalloc_sockaddr2host
  .text.xmalloc_sockaddr2host_noport
-                0x00000000080f0cd2        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0cd2                xmalloc_sockaddr2host_noport
+                0x00000000080f0cd5        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0cd5                xmalloc_sockaddr2host_noport
  .text.xmalloc_sockaddr2hostonly_noport
-                0x00000000080f0cdc        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0cdc                xmalloc_sockaddr2hostonly_noport
+                0x00000000080f0cdf        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0cdf                xmalloc_sockaddr2hostonly_noport
  .text.xmalloc_sockaddr2dotted
-                0x00000000080f0ce6        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0ce6                xmalloc_sockaddr2dotted
+                0x00000000080f0ce9        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0ce9                xmalloc_sockaddr2dotted
  .text.xmalloc_sockaddr2dotted_noport
-                0x00000000080f0cf0        0xa libbb/lib.a(xconnect.o)
-                0x00000000080f0cf0                xmalloc_sockaddr2dotted_noport
+                0x00000000080f0cf3        0xa libbb/lib.a(xconnect.o)
+                0x00000000080f0cf3                xmalloc_sockaddr2dotted_noport
  .text.askpass_timeout
-                0x00000000080f0cfa        0x1 libbb/lib.a(bb_askpass.o)
- .text.bb_ask   0x00000000080f0cfb      0x174 libbb/lib.a(bb_askpass.o)
-                0x00000000080f0cfb                bb_ask
+                0x00000000080f0cfd        0x1 libbb/lib.a(bb_askpass.o)
+ .text.bb_ask   0x00000000080f0cfe      0x174 libbb/lib.a(bb_askpass.o)
+                0x00000000080f0cfe                bb_ask
  .text.bb_ask_stdin
-                0x00000000080f0e6f        0xb libbb/lib.a(bb_askpass.o)
-                0x00000000080f0e6f                bb_ask_stdin
+                0x00000000080f0e72        0xb libbb/lib.a(bb_askpass.o)
+                0x00000000080f0e72                bb_ask_stdin
  .text.printable_string
-                0x00000000080f0e7a       0x5b libbb/lib.a(printable_string.o)
-                0x00000000080f0e7a                printable_string
+                0x00000000080f0e7d       0x5b libbb/lib.a(printable_string.o)
+                0x00000000080f0e7d                printable_string
  .text.__i686.get_pc_thunk.cx
-                0x00000000080f0ed5        0x4 /usr/lib/gcc/i686-linux-gnu/4.6/libgcc_eh.a(unwind-dw2.o)
-                0x00000000080f0ed5                __i686.get_pc_thunk.cx
+                0x00000000080f0ed8        0x4 /usr/lib/gcc/i686-linux-gnu/4.6/libgcc_eh.a(unwind-dw2.o)
+                0x00000000080f0ed8                __i686.get_pc_thunk.cx
  *(SORT(.gnu.warning))
 
 __libc_freeres_fn
