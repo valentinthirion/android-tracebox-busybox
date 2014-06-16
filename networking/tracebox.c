@@ -466,7 +466,7 @@ static void
 print_delta_ms(unsigned t1p, unsigned t2p)
 {
 	unsigned tt = t2p - t1p;
-	printf("  %u.%03u ms\n", tt / 1000, tt % 1000);
+	printf(" %u.%03u ms ", tt / 1000, tt % 1000);
 }
 
 //(struct iphdr *sent_ip, struct iphdr *received_ip)
@@ -707,7 +707,7 @@ compare_tcp_packets (char * sent, int s_offset, char * rec, int r_offset, int le
 }
 
 static int
-common_tracebox_main(char **argv)
+common_tracebox_main(char *url_or_ip, bool show_times, bool detect_statefull, bool detect_proxy, bool detect_full_icmp, bool detect_frags)
 {
 	int max_ttl = 30;
 	int nprobes = 3;
@@ -727,9 +727,9 @@ common_tracebox_main(char **argv)
 
     // Destination
     {
-        dest_lsa = xhost2sockaddr(argv[1], port);
+        dest_lsa = xhost2sockaddr(url_or_ip, port);
         dest_str = xmalloc_sockaddr2dotted_noport(&dest_lsa->u.sa);
-        printf("traceboxing to %s (%s)\n", argv[1], dest_str);
+        printf("traceboxing to %s (%s)\n", url_or_ip, dest_str);
     }
     
 	// Ensure the socket fds won't be 0, 1 or 2
@@ -833,6 +833,21 @@ common_tracebox_main(char **argv)
 				int icmp_code;
                 icmp_code = packet_ok(read_len, from_lsa, to, seq);
 
+                // QUOTED TCP LEN
+                int tcp_len;
+                tcp_len = read_len - 20 - 8 - (quoted_ip->ihl << 2);
+
+                /* ---- SHOW PACKETS ----------- */
+                /*int i;
+                 printf("\n");
+                 for (i = 0; i < read_len; i++)
+                 printf("%x|", sent_datagram[i]);
+                 printf("\n");
+                 for (i = quoted_ip_offset; i < read_len; i++)
+                 printf("%x|", recv_pkt[i]);
+                 printf("\n");
+                 */
+
 				// Skip short packet
 				if (icmp_code == 0)
 					continue;
@@ -844,55 +859,42 @@ common_tracebox_main(char **argv)
                     printf("%s\n", ina);
                     got_dest = 1;
                     got_host = 1;
-                    //if (memcmp(ina, dest_str, 15) == 0)
-                    //    printf("IP match\n");
                     send_probe(sent_datagram, ++seq, ttl, 0, 1); // Send FIN/RST
                     break;
                 }
                 
-				if (!gotlastaddr || (memcmp(lastaddr, &from_lsa->u.sa, from_lsa->len) != 0)) {
-					print(&from_lsa->u.sa);
+				if (!gotlastaddr || (memcmp(lastaddr, &from_lsa->u.sa, from_lsa->len) != 0))
+                {
+                    if (!detect_full_icmp) // Show all hops
+                        print(&from_lsa->u.sa);
+                    else if (tcp_len >= 54) // Show only full_icmp hops
+                        print(&from_lsa->u.sa);
+
 					memcpy(lastaddr, &from_lsa->u.sa, from_lsa->len);
 					gotlastaddr = 1;
                     got_host = 1;
 				}
-                
-				//print_delta_ms(t1, t2);
-                /*int i;
-                printf("\n");
-                for (i = 0; i < read_len; i++)
-                    printf("%x|", sent_datagram[i]);
-                printf("\n");
-                for (i = quoted_ip_offset; i < read_len; i++)
-                    printf("%x|", recv_pkt[i]);
-                printf("\n");
-                */
 
-                start_counter = 0; // Init the counter because we found an host
-
-                /* ---- IP -------------------- */
-                compare_ip_packets(sent_datagram, 0, recv_pkt, quoted_ip_offset, (sent_ip->ihl >= quoted_ip->ihl ? quoted_ip->ihl << 2 : sent_ip->ihl << 2));
-                
-                /* ---- TCP ------------------- */
-                int tcp_len;
-                tcp_len = read_len - 20 - 8 - (quoted_ip->ihl << 2);
-                compare_tcp_packets(sent_datagram, 20, recv_pkt, quoted_tcp_offset, tcp_len);
-
-                /*
-                 struct iphdr * received_ip;
-                received_ip = castToIP(recv_pkt, 0);
-                if (sent_ip->daddr == received_ip->saddr)
+                if (!detect_full_icmp)
                 {
-                    char *ina;
-                    ina = xmalloc_sockaddr2dotted_noport(&from_lsa->u.sa);
-                    printf("%s (Got destination)\n", ina);
-                    got_dest = 1;
-                    got_host = 1;
-                }*/
+                    /* ---- SHOW TIMES ------------- *///
+                    if (show_times)
+                        print_delta_ms(t1, t2);
+
+                    start_counter = 0; // Init the counter because we found an host
+
+                    /* ---- IP -------------------- */
+                    compare_ip_packets(sent_datagram, 0, recv_pkt, quoted_ip_offset, (sent_ip->ihl >= quoted_ip->ihl ? quoted_ip->ihl << 2 : sent_ip->ihl << 2));
                 
-				// End the loop for this ttl
-				if (icmp_code == -1)
-					break;
+                    /* ---- TCP ------------------- */
+                    compare_tcp_packets(sent_datagram, 20, recv_pkt, quoted_tcp_offset, tcp_len);
+                
+                    // End the loop for this ttl
+                    if (icmp_code == -1)
+                        break;
+                }
+                else
+                    break;
 			}
             
             // No packet received
@@ -922,5 +924,44 @@ common_tracebox_main(char **argv)
 
 int tracebox_main(int argc, char *argv[])
 {
-    return common_tracebox_main(argv);
+    bool detect_statefull = false;
+    bool detect_proxy = false;
+    bool detect_full_icmp = false;
+    bool detect_frags = false;
+
+    bool show_times = false;
+
+    char* url_or_ip = argv[1]; // URL or IP
+
+    // test if args
+    if (argc > 2)
+    {
+        int i = 2;
+        while (i < argc)
+        {
+            if (strcmp(argv[i], "-sc") == 0) // script wanted
+            {
+                if ((i + 1 < argc) && ((strcmp(argv[i + 1], "statefull") == 0)))
+                    detect_statefull = true;
+                else if ((i + 1 < argc) && ((strcmp(argv[i + 1], "proxy") == 0)))
+                    detect_proxy = true;
+                else if ((i + 1 < argc) && ((strcmp(argv[i + 1], "full_icmp") == 0)))
+                    detect_full_icmp = true;
+                else if ((i + 1 < argc) && ((strcmp(argv[i + 1], "frags") == 0)))
+                    detect_frags = true;
+                else
+                    printf("Wrong script given, %s is not supported\n", argv[i + 1]);
+                i = i + 2;
+            }
+            else if (strcmp(argv[i], "-st") == 0) // show timestamp
+            {
+                show_times = true;
+                i++;
+            }
+            else
+                i++;
+        }
+    }
+
+    return common_tracebox_main(url_or_ip, show_times, detect_statefull, detect_proxy, detect_full_icmp, detect_frags);
 }
