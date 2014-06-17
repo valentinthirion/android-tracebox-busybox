@@ -713,6 +713,7 @@ common_tracebox_main(char *url_or_ip, bool show_times, bool detect_statefull, bo
 	int nprobes = 3;
 	int first_ttl = 1;
     int stars_max = 10;
+    int path_length;
 	unsigned pausemsecs = 0;
 	char *dest_str;
     
@@ -794,49 +795,50 @@ common_tracebox_main(char *url_or_ip, bool show_times, bool detect_statefull, bo
     
     int got_dest;
     got_dest = 0;
-    int start_counter = 0;
+    int stars_counter = 0;
     
-	for (ttl = first_ttl; ttl <= max_ttl; ++ttl) {
-		int probe;
-		int unreachable = 0; /* counter */
-		int gotlastaddr = 0; /* flags */
-		int got_there = 0;
+    for (ttl = first_ttl; ttl <= max_ttl; ++ttl) {
+        int probe;
+        int unreachable = 0; /* counter */
+        int gotlastaddr = 0; /* flags */
+        int got_there = 0;
         int got_host = 0;
+        
+        path_length = ttl;
         
         if (got_dest == 1)
             break;
         
-		printf("%2d ", ttl);
-		for (probe = 0; probe < nprobes; ++probe) {
-            
+        printf("%2d ", ttl);
+        for (probe = 0; probe < nprobes; ++probe) {
             if (got_host == 1)
                 break;
             
-			int read_len;
-			unsigned t1, t2;
-			int left_ms;
+            int read_len;
+            unsigned t1, t2;
+            int left_ms;
             
-			fflush_all();
-			if (probe != 0 && pausemsecs > 0)
-				usleep(pausemsecs * 1000);
+            fflush_all();
+            if (probe != 0 && pausemsecs > 0)
+                usleep(pausemsecs * 1000);
             
-			send_probe(sent_datagram, ++seq, ttl, 1, 0); // Send SYN
-			t2 = t1 = monotonic_us();
+            send_probe(sent_datagram, ++seq, ttl, 1, 0); // Send SYN
+            t2 = t1 = monotonic_us();
             
-			left_ms = waittime * 1000;
-			while ((read_len = wait_for_reply(from_lsa, to, &t2, &left_ms)) != 0)
+            left_ms = waittime * 1000;
+            while ((read_len = wait_for_reply(from_lsa, to, &t2, &left_ms)) != 0)
             {
                 if (read_len < 0)
-					continue;
-
+                    continue;
+                
                 // Check packets
-				int icmp_code;
+                int icmp_code;
                 icmp_code = packet_ok(read_len, from_lsa, to, seq);
-
+                
                 // QUOTED TCP LEN
                 int tcp_len;
                 tcp_len = read_len - 20 - 8 - (quoted_ip->ihl << 2);
-
+                
                 /* ---- SHOW PACKETS ----------- */
                 /*int i;
                  printf("\n");
@@ -847,11 +849,11 @@ common_tracebox_main(char *url_or_ip, bool show_times, bool detect_statefull, bo
                  printf("%x|", recv_pkt[i]);
                  printf("\n");
                  */
-
-				// Skip short packet
-				if (icmp_code == 0)
-					continue;
-
+                
+                // Skip short packet
+                if (icmp_code == 0)
+                    continue;
+                
                 /* ---- STOP ------------------ */
                 if (icmp_code == 1) // ACK Received
                 {
@@ -863,61 +865,92 @@ common_tracebox_main(char *url_or_ip, bool show_times, bool detect_statefull, bo
                     break;
                 }
                 
-				if (!gotlastaddr || (memcmp(lastaddr, &from_lsa->u.sa, from_lsa->len) != 0))
+                if (!gotlastaddr || (memcmp(lastaddr, &from_lsa->u.sa, from_lsa->len) != 0))
                 {
                     if (!detect_full_icmp) // Show all hops
                         print(&from_lsa->u.sa);
                     else if (tcp_len >= 54) // Show only full_icmp hops
                         print(&from_lsa->u.sa);
-
-					memcpy(lastaddr, &from_lsa->u.sa, from_lsa->len);
-					gotlastaddr = 1;
+                    
+                    memcpy(lastaddr, &from_lsa->u.sa, from_lsa->len);
+                    gotlastaddr = 1;
                     got_host = 1;
-				}
-
+                }
+                
                 if (!detect_full_icmp)
                 {
                     /* ---- SHOW TIMES ------------- *///
                     if (show_times)
                         print_delta_ms(t1, t2);
-
-                    start_counter = 0; // Init the counter because we found an host
-
+                    
+                    stars_counter = 0; // Init the counter because we found an host
+                    
                     /* ---- IP -------------------- */
                     compare_ip_packets(sent_datagram, 0, recv_pkt, quoted_ip_offset, (sent_ip->ihl >= quoted_ip->ihl ? quoted_ip->ihl << 2 : sent_ip->ihl << 2));
-                
+                    
                     /* ---- TCP ------------------- */
                     compare_tcp_packets(sent_datagram, 20, recv_pkt, quoted_tcp_offset, tcp_len);
-                
+                    
                     // End the loop for this ttl
                     if (icmp_code == -1)
                         break;
                 }
                 else
                     break;
-			}
+            }
             
             // No packet received
-			if (read_len == 0)
+            if (read_len == 0)
             {
-				printf("* ");
-                start_counter++; // Increase the counter of stars
-                if (start_counter == stars_max)
+                printf("* ");
+                stars_counter++; // Increase the counter of stars
+                if (stars_counter == stars_max)
                     break;
             }
-		}
-
-		bb_putchar('\n');
-		if (got_there || (unreachable > 0 && unreachable >= nprobes - 1))
-			break;
-
-        /* ---- STOP ------------------ */
-        if (start_counter == stars_max)
+        }
+        
+        bb_putchar('\n');
+        if (got_there || (unreachable > 0 && unreachable >= nprobes - 1))
             break;
-	}
+        
+        /* ---- STOP ------------------ */
+        if (stars_counter == stars_max)
+            break;
+    }
 
     close(sndsock);
     close(rcvsock);
+
+    // detect proxy ? re-do the experiment with UDP and check the length
+    if (detect_proxy)
+    {
+        int udp_lenght = -1; // to not count the first line
+        char command[1024];
+        snprintf(command, sizeof(command), "sudo ./busybox traceroute %s", url_or_ip);
+        printf("detecting proxy using a common UDP traceroute (command to execute : %s)\n", command);
+
+        FILE *fp;
+        int status;
+        char path[1035];
+
+        fp = popen(command, "r");
+        if (fp == NULL) {
+            printf("Failed to run command\n" );
+            exit;
+        }
+        
+        while (fgets(path, sizeof(path)-1, fp) != NULL) {
+            udp_lenght++;
+            printf("%s", path);
+        }
+        pclose(fp);
+
+        // test length
+        if (udp_lenght > path_length)
+            printf("PROXY DETECTED\n");
+        else
+            printf("PROBABLY NO PROXY\n");
+    }
     
 	return 0;
 }

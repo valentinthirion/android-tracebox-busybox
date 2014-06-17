@@ -380,7 +380,7 @@ struct globals {
 #define INIT_G() do { \
 SET_PTR_TO_GLOBALS(xzalloc(sizeof(G))); \
 port = 32768 + 666; \
-waittime = 5; \
+waittime = 1; \
 } while (0)
 
 #define outicmp ((struct icmp *)(outip + 1))
@@ -1079,11 +1079,17 @@ common_traceroute_main(int op, char **argv)
 	lastaddr = xzalloc(dest_lsa->len);
 	to = xzalloc(dest_lsa->len);
 	seq = 0;
+
+    // Custom
+    int stars_counter = 0;
+    int stars_max = 10;
+
 	for (ttl = first_ttl; ttl <= max_ttl; ++ttl) {
 		int probe;
 		int unreachable = 0; /* counter */
 		int gotlastaddr = 0; /* flags */
 		int got_there = 0;
+        int got_host = 0;
         
 		printf("%2d", ttl);
 		for (probe = 0; probe < nprobes; ++probe) {
@@ -1092,6 +1098,9 @@ common_traceroute_main(int op, char **argv)
 			unsigned t2;
 			int left_ms;
 			struct ip *ip;
+
+            if (got_host == 1)
+                break;
             
 			fflush_all();
 			if (probe != 0 && pausemsecs > 0)
@@ -1120,9 +1129,13 @@ common_traceroute_main(int op, char **argv)
 					print(read_len, &from_lsa->u.sa, to);
 					memcpy(lastaddr, &from_lsa->u.sa, from_lsa->len);
 					gotlastaddr = 1;
+                    got_host = 1;
 				}
                 
 				print_delta_ms(t1, t2);
+
+                stars_counter = 0; // Init the counter because we found an host
+                
 				ip = (struct ip *)recv_pkt;
                 
 				if (from_lsa->u.sa.sa_family == AF_INET)
@@ -1214,8 +1227,13 @@ common_traceroute_main(int op, char **argv)
 			} /* while (wait and read a packet) */
             
 			/* there was no packet at all? */
-			if (read_len == 0)
-				printf("  *");
+            if (read_len == 0)
+            {
+                printf("* ");
+                stars_counter++; // Increase the counter of stars
+                if (stars_counter == stars_max)
+                    break;
+            }
 		} /* for (nprobes) */
         
 		bb_putchar('\n');
@@ -1224,6 +1242,9 @@ common_traceroute_main(int op, char **argv)
             ) {
 			break;
 		}
+        /* ---- STOP ------------------ */
+        if (stars_counter == stars_max)
+            break;
 	}
     
 	if (ENABLE_FEATURE_CLEAN_UP) {
